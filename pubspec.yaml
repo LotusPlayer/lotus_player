@@ -1,0 +1,66 @@
+name: lotus_player
+description: "Music Player Developed by Souljalazian"
+publish_to: "none"
+version: 3.2.0+420
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  material_ui: ^1.11.0
+
+  # Core Audio Metadata & OS Query
+  on_audio_query: ^2.9.0
+  flutter_local_notifications: ^23.0.1
+  permission_handler: ^13.0.2
+
+  # State & Utilities
+  shared_preferences: ^2.5.3
+  http: ^1.3.0
+  url_launcher: ^6.3.1
+  flutter_svg: ^2.0.17
+  cupertino_icons: ^2.0.0
+  share_plus: ^13.3.1
+  image_picker: ^1.2.4
+  path_provider: ^2.1.6
+  firebase_core: ^5.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/lotus_flower_icon.png
+    - assets/icons/top_bar_icon.png
+    - assets/icons/home_icon.png
+    - assets/icons/vault_icon.png
+    - assets/icons/dsp_icon.png
+    - assets/icons/mixes_icon.png
+    - assets/icons/recently_added_icon.png
+    - assets/icons/settings_icon.png
+    - assets/icons/artists_icon.png
+    - assets/icons/hidden_songs_icon.png
+    - assets/icons/now_playing_icon.png
+    - assets/icons/create_new_icon.png
+    - assets/icons/heart_icon.png
+    - assets/icons/search_icon.png
+flutter_launcher_icons:
+  android: true
+  ios: false
+  min_sdk_android: 24
+  adaptive_icon_background: "#080B11"
+  adaptive_icon_foreground: "assets/images/lotus_app_icon.png"
+  image_path: "assets/images/lotus_app_icon.png"
+
+dependency_overrides:
+  # Vendored + patched copy (Kotlin Gradle Plugin removed, AGP Built-in Kotlin).
+  # Official on_audio_query_android is abandoned (unlisted on pub.dev, v1.1.0).
+  on_audio_query_android:
+    path: packages/on_audio_query_android

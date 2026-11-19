@@ -1,0 +1,2398 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lotus Player — Makes Your Emotions Bloom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            'theme-primary': 'var(--color-primary, #8A2BE2)',
+            'theme-secondary': 'var(--color-secondary, #EC4899)',
+            accentPrimary: 'var(--color-primary, #8A2BE2)',
+            accentSecondary: 'var(--color-secondary, #EC4899)',
+            surfaceDark: '#07090E',
+            surfaceContainerLow: '#0E131E',
+            surfaceContainer: '#131926',
+            surfaceContainerHigh: '#1C2436',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    :root {
+      /* Default: Lotus Mood Theme */
+      --color-primary: #8A2BE2;
+      --color-secondary: #EC4899;
+      --color-primary-rgb: 138, 43, 226;
+      --color-secondary-rgb: 236, 72, 153;
+      --color-bg-base: #07090E;
+      --color-container-low: #0E131E;
+      --color-container-high: #1A2234;
+      --theme-name: "Lotus Mood (Default)";
+      
+      /* Kinetic Gesture Specific Accents */
+      --kinetic-cyan: #00F2FE;
+      --kinetic-cyan-rgb: 0, 242, 254;
+      --kinetic-magenta: #FF007F;
+      --kinetic-magenta-rgb: 255, 0, 127;
+    }
+
+    body {
+      background-color: var(--color-bg-base);
+      color: #FFFFFF;
+      overflow-x: hidden;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* Dynamic Theme Glows */
+    .glow-theme-primary {
+      box-shadow: 0 0 45px -8px rgba(var(--color-primary-rgb), 0.5);
+    }
+    .glow-theme-secondary {
+      box-shadow: 0 0 55px -6px rgba(var(--color-secondary-rgb), 0.45);
+    }
+    .text-theme-primary {
+      color: var(--color-primary);
+    }
+    .text-theme-secondary {
+      color: var(--color-secondary);
+    }
+    .bg-theme-primary {
+      background-color: var(--color-primary);
+    }
+    .bg-theme-secondary {
+      background-color: var(--color-secondary);
+    }
+    .border-theme-primary {
+      border-color: rgba(var(--color-primary-rgb), 0.45);
+    }
+    .border-theme-secondary {
+      border-color: rgba(var(--color-secondary-rgb), 0.45);
+    }
+    .text-theme-gradient {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Feedback Action Buttons (Dynamic Theme Label Colors by Default) */
+    .btn-feedback-primary {
+      background: rgba(var(--color-primary-rgb), 0.12) !important;
+      border: 1.8px solid var(--color-primary) !important;
+      color: var(--color-primary) !important;
+      box-shadow: 0 0 24px rgba(var(--color-primary-rgb), 0.38), inset 0 0 12px rgba(var(--color-primary-rgb), 0.12) !important;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-feedback-primary,
+    .btn-feedback-primary span,
+    .btn-feedback-primary svg {
+      color: var(--color-primary) !important;
+      fill: var(--color-primary) !important;
+    }
+    .btn-feedback-primary:hover {
+      background: var(--color-primary) !important;
+      border-color: #FFFFFF !important;
+      box-shadow: 0 0 38px rgba(var(--color-primary-rgb), 0.85) !important;
+      transform: translateY(-2px) scale(1.02);
+    }
+    .btn-feedback-primary:hover,
+    .btn-feedback-primary:hover span,
+    .btn-feedback-primary:hover svg {
+      color: #070B14 !important;
+      fill: #070B14 !important;
+    }
+    .btn-feedback-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-feedback-secondary {
+      background: rgba(var(--color-secondary-rgb), 0.10) !important;
+      border: 1.8px solid var(--color-secondary) !important;
+      color: var(--color-secondary) !important;
+      box-shadow: 0 0 20px rgba(var(--color-secondary-rgb), 0.30), inset 0 0 12px rgba(var(--color-secondary-rgb), 0.10) !important;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-feedback-secondary,
+    .btn-feedback-secondary span,
+    .btn-feedback-secondary svg {
+      color: var(--color-secondary) !important;
+      fill: var(--color-secondary) !important;
+    }
+    .btn-feedback-secondary:hover {
+      background: var(--color-secondary) !important;
+      border-color: #FFFFFF !important;
+      box-shadow: 0 0 32px rgba(var(--color-secondary-rgb), 0.80) !important;
+      transform: translateY(-2px) scale(1.02);
+    }
+    .btn-feedback-secondary:hover,
+    .btn-feedback-secondary:hover span,
+    .btn-feedback-secondary:hover svg {
+      color: #070B14 !important;
+      fill: #070B14 !important;
+    }
+    .btn-feedback-secondary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    /* Lotus Flower Organic Pulse */
+    @keyframes lotusBreathingPulse {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 25px rgba(var(--color-primary-rgb), 0.6)) drop-shadow(0 0 50px rgba(var(--color-secondary-rgb), 0.45));
+      }
+      50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 45px rgba(var(--color-primary-rgb), 0.95)) drop-shadow(0 0 75px rgba(var(--color-secondary-rgb), 0.75)) drop-shadow(0 0 25px rgba(255, 179, 0, 0.5));
+      }
+    }
+    .lotus-pulse-bloom {
+      animation: lotusBreathingPulse 2.6s ease-in-out infinite;
+      transform-origin: center center;
+    }
+
+    /* Outer Cymatic Circular Orbit Loop */
+    @keyframes cymaticRotateForward {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes cymaticRotateReverse {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .cymatic-orbit-clockwise {
+      animation: cymaticRotateForward 16s linear infinite;
+      transform-origin: center center;
+    }
+    .cymatic-orbit-counter {
+      animation: cymaticRotateReverse 11s linear infinite;
+      transform-origin: center center;
+    }
+
+    /* Rotating turntable disc */
+    @keyframes vinylSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .turntable-spinning {
+      animation: vinylSpin 4.5s linear infinite;
+    }
+    .turntable-paused {
+      animation-play-state: paused;
+    }
+
+    /* Mini audio wave animation for buttons */
+    @keyframes waveBounce {
+      0%, 100% { height: 3px; }
+      50% { height: 11px; }
+    }
+    .wave-bar-1 { animation: waveBounce 0.8s ease-in-out infinite; }
+    .wave-bar-2 { animation: waveBounce 0.8s ease-in-out infinite 0.2s; }
+    .wave-bar-3 { animation: waveBounce 0.8s ease-in-out infinite 0.4s; }
+
+    /* Ambient glass panels */
+    .glass-panel {
+      background: rgba(14, 19, 30, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-panel-accent {
+      background: rgba(16, 22, 35, 0.94);
+      backdrop-filter: blur(24px);
+      border: 1.2px solid rgba(var(--color-primary-rgb), 0.4);
+    }
+
+    /* ========================================================================= */
+    /* KINETIC ARCH & SNAPBACK TARGET STYLES (NEW DESIGN) */
+    /* ========================================================================= */
+    .kinetic-bezel-edge {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 32px;
+      z-index: 55;
+      cursor: ew-resize;
+      user-select: none;
+      touch-action: none;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+    .kinetic-bezel-edge:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .kinetic-bezel-left {
+      left: 0;
+    }
+    .kinetic-bezel-right {
+      right: 0;
+    }
+
+    /* Resting Notch Indicators */
+    .bezel-resting-tab {
+      position: absolute;
+      top: 48%;
+      transform: translateY(-50%);
+      width: 26px;
+      height: 120px;
+      background: #080C16;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bezel-resting-tab-left {
+      left: 0;
+      border-top-right-radius: 18px;
+      border-bottom-right-radius: 18px;
+      border: 1.5px solid var(--kinetic-cyan);
+      border-left: none;
+      box-shadow: 0 0 16px rgba(var(--kinetic-cyan-rgb), 0.45);
+    }
+    .bezel-resting-tab-right {
+      right: 0;
+      border-top-left-radius: 18px;
+      border-bottom-left-radius: 18px;
+      border: 1.5px solid var(--kinetic-magenta);
+      border-right: none;
+      box-shadow: 0 0 16px rgba(var(--kinetic-magenta-rgb), 0.45);
+    }
+    .kinetic-bezel-edge:hover .bezel-resting-tab {
+      transform: translateY(-50%) scale(1.06);
+    }
+    .kinetic-bezel-edge:hover .bezel-resting-tab-left {
+      box-shadow: 0 0 28px rgba(var(--kinetic-cyan-rgb), 0.75);
+    }
+    .kinetic-bezel-edge:hover .bezel-resting-tab-right {
+      box-shadow: 0 0 28px rgba(var(--kinetic-magenta-rgb), 0.75);
+    }
+
+    .throat-label-left {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--kinetic-cyan);
+    }
+    .throat-label-right {
+      writing-mode: vertical-rl;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--kinetic-magenta);
+    }
+
+    /* Kinetic Bullseye Pulse Animations */
+    @keyframes kineticPulseRings {
+      0% { transform: scale(0.9); opacity: 0.95; }
+      50% { transform: scale(1.15); opacity: 0.7; }
+      100% { transform: scale(0.9); opacity: 0.95; }
+    }
+    .bullseye-pulse-ring {
+      animation: kineticPulseRings 1.6s ease-in-out infinite;
+      transform-origin: center center;
+    }
+
+    /* Floating Snapback Target Card */
+    .snapback-target-card {
+      position: fixed;
+      z-index: 58;
+      width: 235px;
+      background: rgba(18, 21, 31, 0.96);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 16px;
+      padding: 11px 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.92);
+      pointer-events: auto;
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s ease-out;
+    }
+    .snapback-card-left {
+      border: 1.4px solid rgba(var(--kinetic-cyan-rgb), 0.55);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(var(--kinetic-cyan-rgb), 0.3);
+    }
+    .snapback-card-right {
+      border: 1.4px solid rgba(var(--kinetic-magenta-rgb), 0.55);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(var(--kinetic-magenta-rgb), 0.3);
+    }
+
+    /* Top Kinetic Arch Telemetry Banner */
+    .kinetic-telemetry-banner {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      width: 90%;
+      max-width: 480px;
+      background: rgba(14, 18, 26, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 14px;
+      padding: 9px 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ========================================================================= */
+    /* SACRED LOTUS ASCENDER JEWEL (BACK TO TOP) */
+    /* ========================================================================= */
+    .sacred-ascender-jewel {
+      position: fixed;
+      right: 22px;
+      bottom: 110px;
+      z-index: 50;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #070B14; /* Guaranteed solid non-transparent AMOLED obsidian */
+      border: 1.6px solid var(--color-primary);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.92), 
+                  0 0 20px rgba(var(--color-primary-rgb), 0.45),
+                  0 0 24px rgba(var(--color-secondary-rgb), 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+    .sacred-ascender-jewel:hover {
+      transform: translateY(-5px) scale(1.1);
+      border-color: #FFFFFF;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.95), 
+                  0 0 32px rgba(var(--color-primary-rgb), 0.8),
+                  0 0 35px rgba(var(--color-secondary-rgb), 0.55);
+    }
+    .sacred-ascender-jewel:active {
+      transform: translateY(-2px) scale(0.96);
+    }
+    .sacred-inner-halo {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--color-secondary-rgb), 0.45);
+      background: radial-gradient(circle, rgba(var(--color-secondary-rgb), 0.14) 0%, transparent 80%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+    }
+    .sacred-ascender-jewel:hover .sacred-inner-halo {
+      border-color: var(--color-secondary);
+      background: radial-gradient(circle, rgba(var(--color-secondary-rgb), 0.25) 0%, transparent 80%);
+    }
+    .sacred-lotus-seed {
+      width: 3.5px;
+      height: 3.5px;
+      border-radius: 50%;
+      background-color: var(--color-secondary);
+      box-shadow: 0 0 6px var(--color-secondary), 0 0 10px var(--color-secondary);
+      margin-top: 1px;
+    }
+
+    /* ========================================================================= */
+    /* 3D QUANTUM FLIP IN/OUT BOTTOM DECK */
+    /* ========================================================================= */
+    .deck-3d-stage {
+      perspective: 1200px;
+      perspective-origin: center bottom;
+      transform-style: preserve-3d;
+    }
+    .deck-flip-container {
+      transform-origin: center bottom;
+      transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 0.32s ease, 
+                  max-height 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+                  margin 0.35s ease;
+      transform-style: preserve-3d;
+      will-change: transform, opacity, max-height;
+    }
+    .deck-flip-container.deck-collapsed {
+      transform: rotateX(82deg) scale(0.92);
+      opacity: 0;
+      max-height: 0;
+      pointer-events: none;
+      margin-top: 0;
+      margin-bottom: 0;
+      overflow: hidden;
+    }
+    .deck-flip-container.deck-expanded {
+      transform: rotateX(0deg) scale(1);
+      opacity: 1;
+      max-height: 220px;
+      pointer-events: auto;
+    }
+    
+    /* Sculpted Beveled Handle Tab */
+    .deck-beveled-handle {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 28px 4px 28px;
+      background: #070B14; /* Strictly solid AMOLED obsidian */
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      border-top: 1.6px solid rgba(var(--color-primary-rgb), 0.85);
+      border-left: 1px solid rgba(var(--color-primary-rgb), 0.5);
+      border-right: 1px solid rgba(var(--color-primary-rgb), 0.5);
+      box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.8), 0 0 16px rgba(var(--color-primary-rgb), 0.3);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .deck-beveled-handle:hover {
+      box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.9), 0 0 24px rgba(var(--color-primary-rgb), 0.6);
+      transform: translateY(-2px);
+    }
+    .deck-handle-bar {
+      height: 3.5px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+    }
+
+    /* Download Jewel CTA Glow */
+    .jewel-download-glow {
+      position: relative;
+      background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.9), rgba(var(--color-secondary-rgb), 0.9));
+      box-shadow: 0 0 35px -5px rgba(var(--color-primary-rgb), 0.7), 0 12px 30px -8px rgba(0, 0, 0, 0.9);
+    }
+    .jewel-download-glow:hover {
+      box-shadow: 0 0 50px 0px rgba(var(--color-primary-rgb), 0.9), 0 15px 35px -6px rgba(0, 0, 0, 0.95);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* ========================================================================= */
+    /* WHITANIANA SIGNATURE PORCELAIN LIGHT THEME & ARCHITECTURE */
+    /* ========================================================================= */
+    html.theme-whitaniana {
+      --color-primary: #0284C7;
+      --color-secondary: #059669;
+      --color-primary-rgb: 2, 132, 199;
+      --color-secondary-rgb: 5, 150, 105;
+      --color-bg-base: #F5F7FB;
+      --color-container-low: #FFFFFF;
+      --color-container-high: #EEF2F7;
+      --theme-name: "Whitaniana";
+    }
+
+    html.theme-whitaniana body {
+      background-color: #F5F7FB !important;
+      color: #0B101D !important;
+    }
+
+    /* Whitaniana Header Bar */
+    html.theme-whitaniana header.glass-panel {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-bottom: 1.5px solid #CBD5E1 !important;
+      box-shadow: 0 4px 20px -2px rgba(11, 16, 29, 0.06) !important;
+    }
+    html.theme-whitaniana header nav a {
+      color: #334155 !important;
+    }
+    html.theme-whitaniana header nav a:hover {
+      color: #0284C7 !important;
+    }
+
+    /* Whitaniana Glass Panels & Visible Porcelain Cards */
+    html.theme-whitaniana .glass-panel {
+      background: #FFFFFF !important;
+      border: 1.5px solid #CBD5E1 !important;
+      box-shadow: 0 6px 24px -4px rgba(11, 16, 29, 0.07), 0 2px 6px -1px rgba(11, 16, 29, 0.04) !important;
+    }
+    html.theme-whitaniana .glass-panel-accent {
+      background: #FFFFFF !important;
+      border: 1.8px solid #0284C7 !important;
+      box-shadow: 0 10px 30px -4px rgba(2, 132, 199, 0.15) !important;
+    }
+
+    /* Whitaniana Typography Shifts */
+    html.theme-whitaniana h1,
+    html.theme-whitaniana h2,
+    html.theme-whitaniana h3,
+    html.theme-whitaniana h4,
+    html.theme-whitaniana .text-white {
+      color: #0B101D !important;
+    }
+    html.theme-whitaniana .text-gray-200,
+    html.theme-whitaniana .text-gray-300 {
+      color: #1E293B !important;
+    }
+    html.theme-whitaniana .text-gray-400 {
+      color: #334155 !important;
+    }
+    html.theme-whitaniana .text-gray-500 {
+      color: #64748B !important;
+    }
+    html.theme-whitaniana .text-gray-600 {
+      color: #94A3B8 !important;
+    }
+
+    /* Whitaniana Hero Centerpiece Vinyl & Podium */
+    html.theme-whitaniana #hero .rounded-full.p-3 {
+      background: #FFFFFF !important;
+      border: 2px solid #0284C7 !important;
+      box-shadow: 0 24px 60px -10px rgba(2, 132, 199, 0.3), 0 8px 24px -4px rgba(11, 16, 29, 0.08) !important;
+    }
+    html.theme-whitaniana #hero .cymatic-orbit-clockwise circle[stroke="rgba(255, 255, 255, 0.15)"] {
+      stroke: rgba(2, 132, 199, 0.25) !important;
+    }
+    html.theme-whitaniana #hero .cymatic-orbit-counter circle[stroke="rgba(var(--color-secondary-rgb), 0.35)"] {
+      stroke: rgba(5, 150, 105, 0.35) !important;
+    }
+
+    /* Whitaniana Petal Theme Cards */
+    html.theme-whitaniana .theme-card {
+      background: #FFFFFF !important;
+      border: 1.5px solid #CBD5E1 !important;
+      box-shadow: 0 4px 12px -2px rgba(11, 16, 29, 0.05) !important;
+    }
+    html.theme-whitaniana .theme-card:hover {
+      box-shadow: 0 8px 24px -2px rgba(2, 132, 199, 0.2) !important;
+    }
+    html.theme-whitaniana .theme-card.border-theme-primary {
+      border: 2.2px solid #0284C7 !important;
+      box-shadow: 0 8px 28px -2px rgba(2, 132, 199, 0.32) !important;
+    }
+    html.theme-whitaniana .theme-card .text-white {
+      color: #0B101D !important;
+    }
+    html.theme-whitaniana .theme-card .bg-white\/10 {
+      background: #EEF2F7 !important;
+      color: #0284C7 !important;
+      border: 1px solid #CBD5E1 !important;
+    }
+
+    /* Whitaniana Containers & Feature Cards */
+    html.theme-whitaniana .bg-surfaceContainerLow {
+      background-color: #FFFFFF !important;
+      border: 1.5px solid #CBD5E1 !important;
+      box-shadow: 0 4px 16px -2px rgba(11, 16, 29, 0.06) !important;
+    }
+    html.theme-whitaniana .border-white\/10,
+    html.theme-whitaniana .border-white\/15,
+    html.theme-whitaniana .border-white\/20,
+    html.theme-whitaniana .border-white\/5 {
+      border-color: #CBD5E1 !important;
+    }
+    html.theme-whitaniana .bg-white\/5 {
+      background-color: #EEF2F7 !important;
+    }
+    html.theme-whitaniana .bg-black\/40,
+    html.theme-whitaniana .bg-black\/60 {
+      background-color: #EEF2F7 !important;
+      border-color: #CBD5E1 !important;
+    }
+
+    /* Whitaniana Feedback Sanctuary Form */
+    html.theme-whitaniana #feedback > div {
+      background: #FFFFFF !important;
+      border: 2px solid #CBD5E1 !important;
+      box-shadow: 0 20px 60px -10px rgba(11, 16, 29, 0.08), 0 0 35px rgba(2, 132, 199, 0.12) !important;
+    }
+    html.theme-whitaniana #feedback input,
+    html.theme-whitaniana #feedback select,
+    html.theme-whitaniana #feedback textarea {
+      background-color: #EEF2F7 !important;
+      border: 1.5px solid #CBD5E1 !important;
+      color: #0B101D !important;
+    }
+    html.theme-whitaniana #feedback input:focus,
+    html.theme-whitaniana #feedback select:focus,
+    html.theme-whitaniana #feedback textarea:focus {
+      border-color: #0284C7 !important;
+      background-color: #FFFFFF !important;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18) !important;
+    }
+    html.theme-whitaniana #feedback input::placeholder,
+    html.theme-whitaniana #feedback textarea::placeholder {
+      color: #94A3B8 !important;
+    }
+    html.theme-whitaniana #feedback label {
+      color: #334155 !important;
+    }
+
+    /* Whitaniana Action Buttons */
+    html.theme-whitaniana .jewel-download-glow {
+      background: linear-gradient(135deg, #0284C7, #0EA5E9, #059669) !important;
+      box-shadow: 0 10px 30px rgba(2, 132, 199, 0.4), 0 0 40px rgba(5, 150, 105, 0.25) !important;
+    }
+    html.theme-whitaniana .jewel-download-glow,
+    html.theme-whitaniana .jewel-download-glow span,
+    html.theme-whitaniana .jewel-download-glow svg,
+    html.theme-whitaniana .btn-feedback-primary,
+    html.theme-whitaniana .btn-feedback-primary span,
+    html.theme-whitaniana .btn-feedback-primary svg {
+      color: #FFFFFF !important;
+      fill: #FFFFFF !important;
+    }
+    html.theme-whitaniana .btn-feedback-primary {
+      background: #0284C7 !important;
+      border-color: #0284C7 !important;
+    }
+    html.theme-whitaniana .btn-feedback-secondary {
+      background: #EEF2F7 !important;
+      border: 1.8px solid #059669 !important;
+      color: #059669 !important;
+    }
+    html.theme-whitaniana .btn-feedback-secondary span,
+    html.theme-whitaniana .btn-feedback-secondary svg {
+      color: #059669 !important;
+      fill: #059669 !important;
+    }
+
+    /* Whitaniana 3D Magnificent Floating Player Deck */
+    html.theme-whitaniana #magnificentDeckBody {
+      background: #FFFFFF !important;
+      border: 2px solid #0284C7 !important;
+      box-shadow: 0 16px 45px -4px rgba(11, 16, 29, 0.18), 0 0 25px rgba(2, 132, 199, 0.25) !important;
+    }
+    html.theme-whitaniana #deckSongTitle {
+      color: #0B101D !important;
+    }
+    html.theme-whitaniana .deck-handle-bar {
+      background: #CBD5E1 !important;
+    }
+    html.theme-whitaniana .deck-beveled-handle {
+      background: #EEF2F7 !important;
+      border-color: #CBD5E1 !important;
+    }
+    html.theme-whitaniana #deckTurntableDisc {
+      background-color: #EEF2F7 !important;
+    }
+    html.theme-whitaniana #deckScrubberBg {
+      background: #E2E8F0 !important;
+    }
+
+    /* Whitaniana Footer */
+    html.theme-whitaniana footer {
+      background: #FFFFFF !important;
+      border-top: 1.5px solid #CBD5E1 !important;
+      color: #64748B !important;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen selection:bg-pink-500 selection:text-white">
+
+<!-- ========================================================================= -->
+<!-- 1. FULLSCREEN PARABOLIC KINETIC SVG ARCH OVERLAY & BULLSEYE PULSE -->
+<!-- ========================================================================= -->
+<svg class="fixed inset-0 w-full h-full pointer-events-none z-50 overflow-visible" id="kineticArchSvg">
+  <defs>
+    <!-- Cyan Glow Filters -->
+    <filter id="cyanGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <!-- Magenta Glow Filters -->
+    <filter id="magentaGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Parabolic Horn Body Linear Gradients -->
+    <linearGradient id="cyanArchGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00F2FE" stop-opacity="0.32" />
+      <stop offset="65%" stop-color="#0E1422" stop-opacity="0.88" />
+      <stop offset="100%" stop-color="#080B11" stop-opacity="0.96" />
+    </linearGradient>
+
+    <linearGradient id="magentaArchGradient" x1="100%" y1="0%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FF007F" stop-opacity="0.32" />
+      <stop offset="65%" stop-color="#0E1422" stop-opacity="0.88" />
+      <stop offset="100%" stop-color="#080B11" stop-opacity="0.96" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Parabolic Trumpet Horn Path -->
+  <path id="leftArchPath" d="" fill="url(#cyanArchGradient)" stroke="#00F2FE" stroke-width="2.2" opacity="0" filter="url(#cyanGlow)" />
+  <!-- Left Concentric Pulse Bullseye -->
+  <g id="leftBullseyeGroup" opacity="0">
+    <circle id="leftPulseRingOuter" cx="0" cy="0" r="18" fill="none" stroke="#00F2FE" stroke-width="1.8" class="bullseye-pulse-ring" />
+    <circle id="leftPulseRingInner" cx="0" cy="0" r="9" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.85" />
+    <circle id="leftPulseDot" cx="0" cy="0" r="4.5" fill="#FFFFFF" />
+  </g>
+
+  <!-- Right Parabolic Trumpet Horn Path -->
+  <path id="rightArchPath" d="" fill="url(#magentaArchGradient)" stroke="#FF007F" stroke-width="2.2" opacity="0" filter="url(#magentaGlow)" />
+  <!-- Right Concentric Pulse Bullseye -->
+  <g id="rightBullseyeGroup" opacity="0">
+    <circle id="rightPulseRingOuter" cx="0" cy="0" r="18" fill="none" stroke="#FF007F" stroke-width="1.8" class="bullseye-pulse-ring" />
+    <circle id="rightPulseRingInner" cx="0" cy="0" r="9" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.85" />
+    <circle id="rightPulseDot" cx="0" cy="0" r="4.5" fill="#FFFFFF" />
+  </g>
+</svg>
+
+<!-- ========================================================================= -->
+<!-- 2. KINETIC BEZEL INTERACTIVE TOUCH/MOUSE EDGES -->
+<!-- ========================================================================= -->
+<!-- Left Bezel: SOURCE / BACK (Cyan #00F2FE) -->
+<div class="kinetic-bezel-edge kinetic-bezel-left" id="leftKineticBezel" title="Drag inward or click: Left Edge SOURCE / BACK Gesture">
+  <div class="bezel-resting-tab bezel-resting-tab-left">
+    <span class="throat-label-left">S · O · U · R · C · E</span>
+  </div>
+</div>
+
+<!-- Right Bezel: RETURN / NEXT (Magenta #FF007F) -->
+<div class="kinetic-bezel-edge kinetic-bezel-right" id="rightKineticBezel" title="Drag inward or click: Right Edge RETURN / NEXT Gesture">
+  <div class="bezel-resting-tab bezel-resting-tab-right">
+    <span class="throat-label-right">R · E · T · U · R · N</span>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 3. DYNAMIC SNAPBACK TARGET CARDS (FLOATING BESIDE THUMB/CURSOR) -->
+<!-- ========================================================================= -->
+<!-- Left Snapback Target Card -->
+<div class="snapback-target-card snapback-card-left opacity-0 pointer-events-none" id="leftSnapbackCard">
+  <div class="flex items-center justify-between mb-1.5">
+    <span class="text-[8.5px] font-mono font-black text-cyan-400 tracking-wider">ACTIVE PLAYBACK SOURCE &gt;&gt;</span>
+    <span class="text-cyan-400 text-xs font-bold">⇥</span>
+  </div>
+  <div class="flex items-center gap-2.5 my-1">
+    <div class="w-9 h-9 rounded-lg bg-cyan-950/80 border border-cyan-400/40 flex items-center justify-center text-cyan-300 text-sm font-bold flex-shrink-0 shadow-inner">
+      🪷
+    </div>
+    <div class="min-w-0 flex-1">
+      <h4 class="text-xs font-bold text-white truncate" id="leftCardTitle">Resonance Pulse</h4>
+      <p class="text-[9.5px] font-mono text-gray-400 truncate" id="leftCardSubtitle">Tactile Stem Deck // FLAC 24-BIT</p>
+    </div>
+  </div>
+  <div class="flex items-center justify-between mt-2 pt-1.5 border-t border-white/10 text-[8.5px] font-mono">
+    <span class="px-1.5 py-0.5 rounded bg-white/10 text-gray-300 font-bold" id="leftCardBadge">FLAC 96kHz</span>
+    <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold" id="leftPullPill">PULL: 48% ılı</span>
+  </div>
+  <div class="mt-2 w-full py-1 rounded bg-cyan-400 text-black font-black text-[9px] font-mono text-center tracking-wider uppercase transition-all shadow-[0_0_12px_rgba(0,242,254,0.6)] cursor-pointer" onclick="executeSnapback('left')">
+    READY TO EXECUTE →
+  </div>
+</div>
+
+<!-- Right Snapback Target Card -->
+<div class="snapback-target-card snapback-card-right opacity-0 pointer-events-none" id="rightSnapbackCard">
+  <div class="flex items-center justify-between mb-1.5">
+    <span class="text-[8.5px] font-mono font-black text-pink-500 tracking-wider">SNAPBACK TARGET &gt;&gt;</span>
+    <span class="text-pink-500 text-xs font-bold">⇥</span>
+  </div>
+  <div class="flex items-center gap-2.5 my-1">
+    <div class="w-9 h-9 rounded-lg bg-pink-950/80 border border-pink-500/40 flex items-center justify-center text-pink-300 text-sm font-bold flex-shrink-0 shadow-inner">
+      🎛️
+    </div>
+    <div class="min-w-0 flex-1">
+      <h4 class="text-xs font-bold text-white truncate" id="rightCardTitle">Underground Stash #09</h4>
+      <p class="text-[9.5px] font-mono text-gray-400 truncate" id="rightCardSubtitle">Tactile Modular Stems // DSD 128</p>
+    </div>
+  </div>
+  <div class="flex items-center justify-between mt-2 pt-1.5 border-t border-white/10 text-[8.5px] font-mono">
+    <span class="px-1.5 py-0.5 rounded bg-white/10 text-gray-300 font-bold" id="rightCardBadge">DSD 128</span>
+    <span class="px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 border border-pink-500/40 font-bold" id="rightPullPill">PULL: 46% ılı</span>
+  </div>
+  <div class="mt-2 w-full py-1 rounded bg-pink-500 text-black font-black text-[9px] font-mono text-center tracking-wider uppercase transition-all shadow-[0_0_12px_rgba(255,0,127,0.6)] cursor-pointer" onclick="executeSnapback('right')">
+    READY TO EXECUTE →
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 4. TOP KINETIC ARCH TELEMETRY HUD BANNER -->
+<!-- ========================================================================= -->
+<div class="kinetic-telemetry-banner opacity-0 border" id="telemetryHud">
+  <div class="flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full animate-ping" id="telemetryPulseDot"></span>
+      <span class="text-[9.5px] font-mono font-black tracking-wider uppercase truncate" id="telemetryTitle">RIGHT EDGE KINETIC ARCH [RETURN LATCH..]</span>
+    </div>
+    <span class="text-[8px] font-mono font-extrabold px-1.5 py-0.5 rounded border uppercase" id="telemetryStatusPill">ARMED</span>
+  </div>
+  <div class="flex items-center gap-3 mt-1 text-[9px] font-mono text-gray-300">
+    <span id="telemetryDx">DX: -172PX</span>
+    <span>•</span>
+    <span id="telemetryDeflection">46% DEFLECTION</span>
+    <span>•</span>
+    <span class="font-bold text-emerald-400" id="telemetryLatchState">LATCH LOCKED</span>
+  </div>
+  <p class="text-[9px] font-mono text-gray-400 mt-1 truncate" id="telemetryGuidance">Release thumb to snap forward: Underground Stash #09</p>
+</div>
+
+<!-- Interactive Toast Notification for Gesture / Sound Trigger -->
+<div class="fixed top-24 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-opacity duration-300 px-5 py-2.5 rounded-2xl glass-panel border border-white/20 text-xs font-mono font-bold flex items-center gap-2 shadow-2xl" id="gestureToast">
+  <span id="toastIcon">✨</span>
+  <span id="toastMessage">Gesture Activated</span>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 5. FULLSCREEN LOTUS MOOD STARRY DOT-MATRIX BACKDROP -->
+<!-- ========================================================================= -->
+<canvas class="fixed inset-0 w-full h-full pointer-events-none z-0" height="900" id="lotusMoodMatrixCanvas" width="1440"></canvas>
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute -top-[15%] left-[20%] w-[650px] h-[650px] rounded-full filter blur-[140px] opacity-25 transition-all duration-700" id="backdropBlobPrimary" style="background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);"></div>
+<div class="absolute top-[35%] -right-[10%] w-[600px] h-[600px] rounded-full filter blur-[140px] opacity-20 transition-all duration-700" id="backdropBlobSecondary" style="background: radial-gradient(circle, var(--color-secondary) 0%, transparent 70%);"></div>
+</div>
+
+<!-- Content Container Wrapper -->
+<div class="relative z-10 flex flex-col min-h-screen">
+<!-- ========================================================================= -->
+<!-- 6. TOP NAVIGATION BAR -->
+<!-- ========================================================================= -->
+<header class="sticky top-0 z-40 glass-panel border-b border-white/10 px-6 py-4">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<!-- Brand & Protocol with provided lotus flower icon -->
+<a class="flex items-center gap-3.5 group" href="#hero">
+<div class="relative w-11 h-11 rounded-full flex items-center justify-center p-0.5 bg-surfaceContainerLow border-2 border-theme-primary shadow-lg transition-transform group-hover:scale-105 overflow-hidden">
+<img alt="Lotus Flower Icon" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(var(--color-primary-rgb),0.8)]" src="assets/images/lotus_flower.png"/>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xl font-black tracking-wider text-white">Lotus Player</span>
+<span class="text-[9px] font-mono font-black px-1.5 py-0.5 rounded bg-theme-primary/15 text-theme-primary border border-theme-primary/40">RISE &amp; BLOOM</span>
+</div>
+<p class="text-[10px] tracking-widest font-mono font-bold uppercase"><span class="text-theme-primary">120 FPS MASTER</span> <span class="text-gray-600">•</span> <span class="text-theme-secondary">BIT-PERFECT 384KHZ DSD512</span></p>
+</div>
+</a>
+<!-- Desktop Navigation Items -->
+<nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-300">
+<a class="hover:text-theme-primary transition-colors flex items-center gap-1.5" href="#petalThemes">
+<span class="w-1.5 h-1.5 rounded-full bg-theme-primary"></span>Petal Themes
+          </a>
+<a class="hover:text-cyan-400 transition-colors flex items-center gap-1.5" href="#gesturesDemo">
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>Kinetic Gestures
+          </a>
+<a class="hover:text-emerald-400 transition-colors flex items-center gap-1.5" href="#features">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Audiophile DSP
+          </a>
+<a class="hover:text-theme-secondary transition-colors flex items-center gap-1.5" href="#feedback">
+<span class="w-1.5 h-1.5 rounded-full bg-theme-secondary"></span>Feedback
+          </a>
+<a class="hover:text-theme-primary transition-colors flex items-center gap-1.5" href="#download">
+<span class="w-1.5 h-1.5 rounded-full bg-theme-primary"></span>Download APK
+          </a>
+</nav>
+<!-- Right Hardware Audio Spec Capsule -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-surfaceContainerLow border border-white/10 text-xs font-mono shadow-inner">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="text-emerald-400 font-bold">ALSA Direct</span>
+<span class="text-gray-500">•</span>
+<span class="text-gray-300">432Hz Sacred</span>
+</div>
+<a class="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-theme-primary/15 hover:bg-theme-primary text-theme-primary hover:text-black border border-theme-primary/40 font-mono font-bold text-xs uppercase tracking-wider transition-all" href="#download">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg>
+<span>v3.2.0 APK</span>
+</a>
+</div>
+</div>
+</header>
+
+<!-- ========================================================================= -->
+<!-- 7. HERO SECTION: SACRED LOTUS FLOWER & ROTATING CYMATIC HALO -->
+<!-- ========================================================================= -->
+<section class="relative pt-12 pb-16 px-6 overflow-hidden flex flex-col items-center text-center" id="hero">
+<!-- Audiophile Architecture Pill -->
+<div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-panel border border-theme-primary mb-8 shadow-lg">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+</span>
+<span class="text-xs font-mono font-bold tracking-wider text-theme-primary">AUDIOPHILE ZERO-JANK ARCHITECTURE</span>
+</div>
+<!-- CENTERPIECE: SACRED LOTUS FLOWER WITH ORBITING CYMATIC HALO RINGS -->
+<div class="relative w-[340px] h-[340px] sm:w-[440px] sm:h-[440px] flex items-center justify-center my-4">
+<!-- Outer Rotating Cymatic Soundwave Orbit Ring (Clockwise) -->
+<svg class="absolute inset-0 w-full h-full cymatic-orbit-clockwise pointer-events-none" viewbox="0 0 400 400">
+<circle cx="200" cy="200" fill="none" r="190" stroke="rgba(255, 255, 255, 0.15)" stroke-dasharray="6 8" stroke-width="1.5"></circle>
+<circle cx="200" cy="200" fill="none" r="172" stroke="rgba(var(--color-primary-rgb), 0.35)" stroke-width="1.2"></circle>
+<!-- Orbit Nodes / Energy Harmonic Points -->
+<circle class="filter drop-shadow-[0_0_8px_var(--color-primary)]" cx="200" cy="10" fill="var(--color-primary)" r="5"></circle>
+<circle class="filter drop-shadow-[0_0_8px_var(--color-secondary)]" cx="390" cy="200" fill="var(--color-secondary)" r="4.5"></circle>
+<circle class="filter drop-shadow-[0_0_8px_#7928CA]" cx="200" cy="390" fill="#7928CA" r="5"></circle>
+<circle class="filter drop-shadow-[0_0_8px_#00F2FE]" cx="10" cy="200" fill="#00F2FE" r="4.5"></circle>
+</svg>
+<!-- Inner Counter-Rotating Orbit Ring -->
+<svg class="absolute inset-0 w-full h-full cymatic-orbit-counter pointer-events-none" viewbox="0 0 400 400">
+<circle cx="200" cy="200" fill="none" r="145" stroke="rgba(var(--color-secondary-rgb), 0.35)" stroke-dasharray="10 10" stroke-width="1.2"></circle>
+<circle cx="200" cy="55" fill="var(--color-secondary)" r="4"></circle>
+<circle cx="345" cy="200" fill="var(--color-primary)" r="3.5"></circle>
+</svg>
+<!-- Ambient Atmospheric Pulsing Aura Behind Flower -->
+<div class="absolute w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] rounded-full filter blur-3xl opacity-50 animate-pulse" style="background: radial-gradient(circle, var(--color-primary), var(--color-secondary));"></div>
+<!-- SACRED BLOOMING LOTUS FLOWER EMBLEM (CONCENTRIC VINYL FIT & PROVIDED IMAGE_2) -->
+<div class="relative z-10 w-[220px] h-[220px] sm:w-[270px] sm:h-[270px] rounded-full p-3 bg-[#080C16] border-2 border-theme-primary shadow-2xl flex items-center justify-center">
+<div class="w-full h-full lotus-pulse-bloom flex items-center justify-center cursor-pointer relative" onclick="pulseLotusFlower()" title="Tap to Feel Harmonic Pulse">
+<!-- Subtle concentric vinyl groove under image -->
+<div class="absolute inset-0 rounded-full border border-white/10 pointer-events-none"></div>
+<div class="absolute inset-3 rounded-full border border-white/5 pointer-events-none"></div>
+<!-- Provided Lotus Flower Artwork IMAGE_2 -->
+<img alt="Lotus Flower Masterpiece" class="w-full h-full object-contain filter drop-shadow-[0_0_30px_rgba(var(--color-primary-rgb),0.85)] drop-shadow-[0_0_55px_rgba(var(--color-secondary-rgb),0.6)] select-none pointer-events-none" src="assets/images/lotus_flower.png"/>
+</div>
+</div>
+</div>
+<!-- Live Dynamic Equalizer Bars under Flower -->
+<div class="flex items-end justify-center gap-1.5 h-9 my-3 px-6 max-w-xs w-full" id="heroSpectrumVisualizer">
+<!-- 14 Spectrum Bars generated in JS -->
+</div>
+<!-- Headline -->
+<h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight max-w-4xl my-2">
+        Makes Your Emotions <span class="text-theme-secondary">Bloom</span> In <span class="text-theme-primary">Pure Sound</span>
+</h1>
+<p class="max-w-2xl text-gray-400 text-sm sm:text-base leading-relaxed mb-8">
+        Designed for high-resolution lossless FLAC and DSD formats. Built with cooperative 120Hz display locking, 3D Binaural Spatializer, Solfeggio 528Hz Sacred bio-mixers, and parabolic kinetic edge gestures.
+      </p>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center justify-center gap-4">
+<!-- Prominent Audiophile Jewel Download Button -->
+<a class="jewel-download-glow px-8 py-4 rounded-2xl text-black font-black text-sm uppercase tracking-wider transition-all flex items-center gap-3.5 group" href="#download">
+<div class="w-8 h-8 rounded-xl bg-black/20 flex items-center justify-center text-black">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003 0-.551.4482-.9993.9993-.9993.5518 0 1.0004.4483 1.0004.9993 0 .5517-.4486 1.0003-1.0004 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003 0-.551.4482-.9993.9993-.9993.5518 0 1.0004.4483 1.0004.9993 0 .5517-.4486 1.0003-1.0004 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5682.1527l-2.0223 3.5029c-1.6114-.7377-3.4357-1.1578-5.3862-1.1578-1.9505 0-3.7748.4201-5.3862 1.1578L4.3417 5.4473a.4157.4157 0 00-.5682-.1527.416.416 0 00-.1521.5676l1.9973 3.4592C2.6889 10.9785 1 14.1952 1 17.8427h22c0-3.6475-1.6889-6.8642-4.6185-8.5213"></path>
+</svg>
+</div>
+<div class="text-left leading-tight">
+<span class="block text-[10px] font-mono tracking-widest text-black/80 font-bold">BIT-PERFECT AUDIO MASTER</span>
+<span class="text-base font-black tracking-wide">Download for Android</span>
+</div>
+<span class="text-[10px] font-mono px-2 py-1 rounded bg-black/25 text-black font-extrabold tracking-tight ml-1">v3.2.0 • 9-15+</span>
+</a>
+<!-- Petal Themes Button -->
+<a class="px-7 py-4 rounded-2xl glass-panel text-white font-bold text-xs uppercase tracking-wider hover:border-theme-primary transition-all flex items-center gap-2.5" href="#gesturesDemo">
+<svg class="w-4 h-4 fill-current text-cyan-400" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5v-9l6 4.5-6 4.5z"></path></svg>
+<span>Test Kinetic Arch Gestures</span>
+</a>
+</div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 8. PETAL SPECTRAL THEMES SECTION -->
+<!-- ========================================================================= -->
+<section class="py-14 px-6 max-w-7xl mx-auto w-full" id="petalThemes">
+<div class="glass-panel p-6 sm:p-8 rounded-3xl border-theme-primary transition-all duration-300">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+<div>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-theme-primary font-bold uppercase mb-2">
+<span class="w-2 h-2 rounded-full bg-theme-primary animate-ping"></span>
+              Live Dynamic Palette &amp; Real-Time Audiophile Synthesizer
+            </div>
+<h2 class="text-2xl sm:text-3xl font-black text-white">Petal Spectral <span class="text-theme-primary">Themes</span> &amp; <span class="text-theme-secondary">Audio Samples</span></h2>
+<p class="text-xs sm:text-sm text-gray-400 mt-1">Tap any signature petal below to synthesize a real-time Web Audio API harmonic chord tuned to its distinct frequency while morphing the page theme!</p>
+</div>
+<div class="text-left md:text-right flex flex-col md:items-end gap-1">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="text-[10px] font-mono text-emerald-400 font-bold tracking-wider uppercase">AUDIO PREVIEW ACTIVE</span>
+</div>
+<span class="text-xs font-mono text-gray-400 block">CURRENT APPLIED PETAL:</span>
+<span class="text-sm font-mono font-black text-theme-primary uppercase" id="currentThemeBadge">Lotus Mood (Default)</span>
+<span class="text-[10px] font-mono text-gray-400" id="currentToneBadge">528Hz Solfeggio Miracle Chord</span>
+</div>
+</div>
+<!-- Theme Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+<!-- 1. Lotus Mood (Default) -->
+<button class="theme-card relative p-3 rounded-2xl bg-surfaceContainerLow border-2 border-theme-primary flex flex-col items-center text-center transition-all hover:scale-105 group" data-theme="lotus_mood" onclick="applyPetalTheme('lotus_mood')">
+<div class="absolute top-2 right-2 flex items-end gap-0.5 h-3 opacity-90" title="Audio Sample Ready">
+<span class="w-0.5 bg-pink-400 rounded-full wave-bar-1"></span>
+<span class="w-0.5 bg-purple-400 rounded-full wave-bar-2"></span>
+<span class="w-0.5 bg-pink-300 rounded-full wave-bar-3"></span>
+</div>
+<div class="w-12 h-12 rounded-full mb-2.5 p-1 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden" style="background: radial-gradient(circle, #8A2BE2, #EC4899);">
+<img alt="Lotus mood icon" class="w-7 h-7 object-contain" src="assets/images/lotus_flower.png"/>
+</div>
+<span class="text-xs font-bold text-white block">Lotus Mood</span>
+<span class="text-[9px] font-mono text-pink-400 mt-0.5">Sacred Purple/Pink</span>
+<span class="text-[8px] font-mono text-purple-300/80 mt-1">528Hz Miracle Chord</span>
+<div class="mt-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-mono text-theme-primary font-bold">
+<span>♪</span>
+<span>PLAY SOUND</span>
+</div>
+</button>
+<!-- 2. Cyber Bloom -->
+<button class="theme-card relative p-3 rounded-2xl bg-surfaceContainerLow border border-white/10 hover:border-cyan-400 flex flex-col items-center text-center transition-all hover:scale-105 group" data-theme="cyber_bloom" onclick="applyPetalTheme('cyber_bloom')">
+<div class="absolute top-2 right-2 flex items-end gap-0.5 h-3 opacity-75 group-hover:opacity-100" title="Audio Sample Ready">
+<span class="w-0.5 bg-cyan-400 rounded-full wave-bar-1"></span>
+<span class="w-0.5 bg-pink-400 rounded-full wave-bar-2"></span>
+<span class="w-0.5 bg-cyan-300 rounded-full wave-bar-3"></span>
+</div>
+<div class="w-12 h-12 rounded-full mb-2.5 p-1 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform" style="background: radial-gradient(circle, #00F2FE, #FF2A8D);">
+<span class="text-xs">⚡</span>
+</div>
+<span class="text-xs font-bold text-white block">Cyber Bloom</span>
+<span class="text-[9px] font-mono text-cyan-300 mt-0.5">Cyan &amp; Neon Magenta</span>
+<span class="text-[8px] font-mono text-cyan-300/80 mt-1">Synth Arp Bloom</span>
+<div class="mt-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-mono text-cyan-300 font-bold">
+<span>♪</span>
+<span>PLAY SOUND</span>
+</div>
+</button>
+<!-- 3. Starry Night -->
+<button class="theme-card relative p-3 rounded-2xl bg-surfaceContainerLow border border-white/10 hover:border-blue-400 flex flex-col items-center text-center transition-all hover:scale-105 group" data-theme="starry_night" onclick="applyPetalTheme('starry_night')">
+<div class="absolute top-2 right-2 flex items-end gap-0.5 h-3 opacity-75 group-hover:opacity-100" title="Audio Sample Ready">
+<span class="w-0.5 bg-blue-400 rounded-full wave-bar-1"></span>
+<span class="w-0.5 bg-indigo-400 rounded-full wave-bar-2"></span>
+<span class="w-0.5 bg-blue-300 rounded-full wave-bar-3"></span>
+</div>
+<div class="w-12 h-12 rounded-full mb-2.5 p-1 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform" style="background: radial-gradient(circle, #3B82F6, #8B5CF6);">
+<span class="text-xs">✨</span>
+</div>
+<span class="text-xs font-bold text-white block">Starry Night</span>
+<span class="text-[9px] font-mono text-blue-300 mt-0.5">Deep Cobalt &amp; Astral</span>
+<span class="text-[8px] font-mono text-blue-300/80 mt-1">432Hz Astral Bell</span>
+<div class="mt-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-mono text-blue-300 font-bold">
+<span>♪</span>
+<span>PLAY SOUND</span>
+</div>
+</button>
+<!-- 4. Solar Amber -->
+<button class="theme-card relative p-3 rounded-2xl bg-surfaceContainerLow border border-white/10 hover:border-amber-400 flex flex-col items-center text-center transition-all hover:scale-105 group" data-theme="solar_amber" onclick="applyPetalTheme('solar_amber')">
+<div class="absolute top-2 right-2 flex items-end gap-0.5 h-3 opacity-75 group-hover:opacity-100" title="Audio Sample Ready">
+<span class="w-0.5 bg-amber-400 rounded-full wave-bar-1"></span>
+<span class="w-0.5 bg-orange-400 rounded-full wave-bar-2"></span>
+<span class="w-0.5 bg-amber-300 rounded-full wave-bar-3"></span>
+</div>
+<div class="w-12 h-12 rounded-full mb-2.5 p-1 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform" style="background: radial-gradient(circle, #FFB300, #FF5722);">
+<span class="text-xs">☀️</span>
+</div>
+<span class="text-xs font-bold text-white block">Solar Amber</span>
+<span class="text-[9px] font-mono text-amber-300 mt-0.5">Champagne &amp; Flame</span>
+<span class="text-[8px] font-mono text-amber-300/80 mt-1">Tube Warmth Chime</span>
+<div class="mt-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-mono text-amber-300 font-bold">
+<span>♪</span>
+<span>PLAY SOUND</span>
+</div>
+</button>
+<!-- 5. Emerald Oasis -->
+<button class="theme-card relative p-3 rounded-2xl bg-surfaceContainerLow border border-white/10 hover:border-emerald-400 flex flex-col items-center text-center transition-all hover:scale-105 group" data-theme="emerald_oasis" onclick="applyPetalTheme('emerald_oasis')">
+<div class="absolute top-2 right-2 flex items-end gap-0.5 h-3 opacity-75 group-hover:opacity-100" title="Audio Sample Ready">
+<span class="w-0.5 bg-emerald-400 rounded-full wave-bar-1"></span>
+<span class="w-0.5 bg-teal-400 rounded-full wave-bar-2"></span>
+<span class="w-0.5 bg-emerald-300 rounded-full wave-bar-3"></span>
+</div>
+<div class="w-12 h-12 rounded-full mb-2.5 p-1 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform" style="background: radial-gradient(circle, #00E676, #00B0FF);">
+<span class="text-xs">🌿</span>
+</div>
+<span class="text-xs font-bold text-white block">Emerald Oasis</span>
+<span class="text-[9px] font-mono text-emerald-300 mt-0.5">Mint Green &amp; Azure</span>
+<span class="text-[8px] font-mono text-emerald-300/80 mt-1">Zen Kalimba Drop</span>
+<div class="mt-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-mono text-emerald-300 font-bold">
+<span>♪</span>
+<span>PLAY SOUND</span>
+</div>
+</button>
+<!-- 6. Velvet Rose -->
+<button class="theme-card relative p-3 rounded-2xl bg-surfaceContainerLow border border-white/10 hover:border-rose-400 flex flex-col items-center text-center transition-all hover:scale-105 group" data-theme="velvet_rose" onclick="applyPetalTheme('velvet_rose')">
+<div class="absolute top-2 right-2 flex items-end gap-0.5 h-3 opacity-75 group-hover:opacity-100" title="Audio Sample Ready">
+<span class="w-0.5 bg-rose-400 rounded-full wave-bar-1"></span>
+<span class="w-0.5 bg-purple-400 rounded-full wave-bar-2"></span>
+<span class="w-0.5 bg-rose-300 rounded-full wave-bar-3"></span>
+</div>
+<div class="w-12 h-12 rounded-full mb-2.5 p-1 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform" style="background: radial-gradient(circle, #E11D48, #9333EA);">
+<span class="text-xs">🌹</span>
+</div>
+<span class="text-xs font-bold text-white block">Velvet Rose</span>
+<span class="text-[9px] font-mono text-rose-300 mt-0.5">Crimson &amp; Amethyst</span>
+<span class="text-[8px] font-mono text-rose-300/80 mt-1">Cello Triad Velvet</span>
+<div class="mt-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-mono text-rose-300 font-bold">
+<span>♪</span>
+<span>PLAY SOUND</span>
+</div>
+</button>
+<!-- 7. Volt Aura -->
+<button class="theme-card relative p-3 rounded-2xl bg-surfaceContainerLow border border-white/10 hover:border-lime-400 flex flex-col items-center text-center transition-all hover:scale-105 group" data-theme="volt_aura" onclick="applyPetalTheme('volt_aura')">
+<div class="absolute top-2 right-2 flex items-end gap-0.5 h-3 opacity-75 group-hover:opacity-100" title="Audio Sample Ready">
+<span class="w-0.5 bg-lime-400 rounded-full wave-bar-1"></span>
+<span class="w-0.5 bg-cyan-400 rounded-full wave-bar-2"></span>
+<span class="w-0.5 bg-lime-300 rounded-full wave-bar-3"></span>
+</div>
+<div class="w-12 h-12 rounded-full mb-2.5 p-1 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform" style="background: radial-gradient(circle, #A3E635, #06B6D4);">
+<span class="text-xs">🔋</span>
+</div>
+<span class="text-xs font-bold text-white block">Volt Aura</span>
+<span class="text-[9px] font-mono text-lime-300 mt-0.5">Electric Volt Lime</span>
+<span class="text-[8px] font-mono text-lime-300/80 mt-1">Laser Arp Pulse</span>
+<div class="mt-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-mono text-lime-300 font-bold">
+<span>♪</span>
+<span>PLAY SOUND</span>
+</div>
+</button>
+<!-- 8. Whitaniana -->
+<button class="theme-card relative p-3 rounded-2xl bg-surfaceContainerLow border border-white/10 hover:border-sky-400 flex flex-col items-center text-center transition-all hover:scale-105 group" data-theme="whitaniana" onclick="applyPetalTheme('whitaniana')">
+<div class="absolute top-2 right-2 flex items-end gap-0.5 h-3 opacity-75 group-hover:opacity-100" title="Audio Sample Ready">
+<span class="w-0.5 bg-sky-400 rounded-full wave-bar-1"></span>
+<span class="w-0.5 bg-emerald-400 rounded-full wave-bar-2"></span>
+<span class="w-0.5 bg-sky-300 rounded-full wave-bar-3"></span>
+</div>
+<div class="w-12 h-12 rounded-full mb-2.5 p-1 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform" style="background: radial-gradient(circle, #0284C7, #059669);">
+<span class="text-xs">💎</span>
+</div>
+<span class="text-xs font-bold text-white block">Whitaniana</span>
+<span class="text-[9px] font-mono text-sky-300 mt-0.5">Porcelain &amp; Obsidian</span>
+<span class="text-[8px] font-mono text-emerald-300/80 mt-1">Verdi Acoustic Clarity</span>
+<div class="mt-2 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-mono text-sky-300 font-bold">
+<span>♪</span>
+<span>PLAY SOUND</span>
+</div>
+</button>
+</div>
+</div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 9. CORE AUDIOPHILE FEATURES (3D SPATIALIZER, 432HZ, CALIBRATED CROSSFADE) -->
+<!-- ========================================================================= -->
+<section class="py-12 px-6 max-w-7xl mx-auto w-full" id="features">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- 3D Binaural Spatializer -->
+<div class="glass-panel p-6 rounded-3xl border border-white/10 hover:border-theme-primary transition-all">
+<div class="w-11 h-11 rounded-2xl bg-white/5 border border-white/15 flex items-center justify-center text-theme-primary mb-4">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-lg font-bold text-white">3D Binaural <span class="text-theme-primary">Spatializer</span></h3>
+<span class="text-[8px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400">HARDWARE BOUND</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed">
+            Interactive 2D acoustic stage positioning. Simulates human interaural time delay (ITD) and room acoustics (Studio, Concert Hall, Jazz Club, Open Air) without stereo fatigue.
+          </p>
+<div class="mt-4 pt-3 border-t border-white/10 flex justify-between text-[10px] font-mono text-gray-400">
+<span>Ear Crossfeed: 45%</span>
+<span class="text-theme-primary font-bold">Aperture: 1.25x</span>
+</div>
+</div>
+<!-- 432Hz & 528Hz Sacred Resonator -->
+<div class="glass-panel p-6 rounded-3xl border border-white/10 hover:border-theme-secondary transition-all">
+<div class="w-11 h-11 rounded-2xl bg-white/5 border border-white/15 flex items-center justify-center text-theme-secondary mb-4">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-lg font-bold text-white">432Hz &amp; 528Hz <span class="text-theme-secondary">Sacred Resonator</span></h3>
+<span class="text-[8px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-400">VERDI PITCH</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed">
+            Real-time global harmonic phase alignment at 432.0/440.0 ratio with circadian isochronic bio-modulation (Theta 6.0Hz, Alpha 10Hz) and gentle pink/brown noise masking.
+          </p>
+<div class="mt-4 pt-3 border-t border-white/10 flex justify-between text-[10px] font-mono text-gray-400">
+<span>Isochronic Depth: 82%</span>
+<span class="text-theme-secondary font-bold">Tone Blend: 64%</span>
+</div>
+</div>
+<!-- Calibrated Outro-Only Crossfade -->
+<div class="glass-panel p-6 rounded-3xl border border-white/10 hover:border-amber-400 transition-all">
+<div class="w-11 h-11 rounded-2xl bg-white/5 border border-white/15 flex items-center justify-center text-amber-400 mb-4">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-lg font-bold text-white">Calibrated Outro <span class="text-theme-primary">Crossfade</span></h3>
+<span class="text-[8px] font-mono font-bold px-2 py-0.5 rounded bg-pink-500/20 text-pink-400">ZERO MUTING</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed">
+            Outgoing song fades down smoothly (1.0 → 0.0) while the incoming song starts immediately at full 100% volume with zero ducking, preventing silent track starts when scrubbing.
+          </p>
+<div class="mt-4 pt-3 border-t border-white/10 flex justify-between text-[10px] font-mono text-gray-400">
+<span>Discrete Steps: 0.5s - 10.0s</span>
+<span class="text-amber-400 font-bold">Watchdog: 100ms</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 10. NEW KINETIC BEZEL GESTURES DEMO & INTERACTIVE ON-SCREEN CONTROLS -->
+<!-- ========================================================================= -->
+<section class="py-12 px-6 max-w-7xl mx-auto w-full" id="gesturesDemo">
+<div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
+<!-- Ambient background glow behind demo -->
+<div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full filter blur-3xl opacity-20 pointer-events-none" style="background: radial-gradient(circle, var(--kinetic-magenta), transparent 70%);"></div>
+<div class="absolute -left-20 -top-20 w-80 h-80 rounded-full filter blur-3xl opacity-20 pointer-events-none" style="background: radial-gradient(circle, var(--kinetic-cyan), transparent 70%);"></div>
+
+<div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+  <div>
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-theme-primary/10 border border-theme-primary/30 text-xs font-mono font-bold uppercase mb-2">
+      <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+      <span class="text-theme-primary">120 FPS Parabolic Trumpet Horn</span> &amp; <span class="text-theme-secondary">Snapback Target Architecture</span>
+    </div>
+    <h3 class="text-2xl sm:text-3xl font-black text-white flex items-center gap-2">
+      <span>🖐️ Kinetic Edge Gestures <span class="text-theme-primary">Demonstration</span></span>
+    </h3>
+    <p class="text-xs sm:text-sm text-gray-400 mt-1">
+      Interact with the live simulation below or <strong>drag inward from either edge of your screen</strong> at any time to experience the fluid kinetic deflection!
+    </p>
+  </div>
+  <div class="flex items-center gap-3 text-xs font-mono">
+    <span class="px-2.5 py-1 rounded-lg bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 font-bold">LEFT: SOURCE / BACK</span>
+    <span class="text-gray-500">•</span>
+    <span class="px-2.5 py-1 rounded-lg bg-pink-500/15 border border-pink-500/40 text-pink-300 font-bold">RIGHT: RETURN / NEXT</span>
+  </div>
+</div>
+
+<!-- Interactive Live Gesture Simulator Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
+  <!-- Left Edge Gesture Simulator (Cyan #00F2FE) -->
+  <div class="p-5 rounded-2xl bg-surfaceContainerLow border border-cyan-500/40 shadow-xl flex flex-col justify-between">
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_8px_#00F2FE]"></div>
+          <span class="text-xs font-mono font-black text-cyan-300 tracking-wider uppercase">LEFT BEZEL KINETIC ARCH</span>
+        </div>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-200 border border-cyan-500/30 font-bold">SOURCE // BACK</span>
+      </div>
+      <p class="text-xs text-gray-300 leading-relaxed mb-4">
+        Triggers smart navigation: Jumps straight to the <strong>active playback source directory</strong> if playing from another crate/folder, or exits drilldown to the <strong>Vault Root overview</strong>.
+      </p>
+      
+      <!-- Interactive Slider Control -->
+      <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 mb-4">
+        <div class="flex items-center justify-between text-[10px] font-mono text-gray-400 mb-2">
+          <span>DRAG DEFLECTION (DX)</span>
+          <span class="text-cyan-400 font-black" id="leftDemoVal">PULL: 65% (LATCHED)</span>
+        </div>
+        <input type="range" min="0" max="100" value="65" class="w-full accent-cyan-400 cursor-pointer" id="leftDeflectionSlider" oninput="updateDemoDeflection('left', this.value)">
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button class="flex-1 py-3 px-4 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/50 font-mono font-bold text-xs flex items-center justify-center gap-2 transition-all hover:scale-[1.02]" onclick="simulateKineticEdge('left')">
+        <span>⚡ Test Left Kinetic Pull</span>
+      </button>
+      <button class="py-3 px-4 rounded-xl bg-cyan-400 text-black font-black font-mono text-xs hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(0,242,254,0.5)]" onclick="executeSnapback('left')">
+        EXECUTE →
+      </button>
+    </div>
+  </div>
+
+  <!-- Right Edge Gesture Simulator (Magenta #FF007F) -->
+  <div class="p-5 rounded-2xl bg-surfaceContainerLow border border-pink-500/40 shadow-xl flex flex-col justify-between">
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-3 h-3 rounded-full bg-pink-500 shadow-[0_0_8px_#FF007F]"></div>
+          <span class="text-xs font-mono font-black text-pink-300 tracking-wider uppercase">RIGHT BEZEL KINETIC ARCH</span>
+        </div>
+        <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-pink-500/20 text-pink-200 border border-pink-500/30 font-bold">RETURN // NEXT</span>
+      </div>
+      <p class="text-xs text-gray-300 leading-relaxed mb-4">
+        Snaps back to the <strong>pre-jump inspected stash / crate</strong> when returning from playback source, or sequences forward to the <strong>next consecutive audio crate</strong> in memory.
+      </p>
+
+      <!-- Interactive Slider Control -->
+      <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 mb-4">
+        <div class="flex items-center justify-between text-[10px] font-mono text-gray-400 mb-2">
+          <span>DRAG DEFLECTION (DX)</span>
+          <span class="text-pink-400 font-black" id="rightDemoVal">PULL: 75% (LATCHED)</span>
+        </div>
+        <input type="range" min="0" max="100" value="75" class="w-full accent-pink-500 cursor-pointer" id="rightDeflectionSlider" oninput="updateDemoDeflection('right', this.value)">
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button class="flex-1 py-3 px-4 rounded-xl bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-500/50 font-mono font-bold text-xs flex items-center justify-center gap-2 transition-all hover:scale-[1.02]" onclick="simulateKineticEdge('right')">
+        <span>⚡ Test Right Kinetic Pull</span>
+      </button>
+      <button class="py-3 px-4 rounded-xl bg-pink-500 text-black font-black font-mono text-xs hover:bg-pink-400 transition-all shadow-[0_0_15px_rgba(255,0,127,0.5)]" onclick="executeSnapback('right')">
+        EXECUTE →
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 11. DEDICATED AUDIOPHILE APK DOWNLOAD CTA SECTION -->
+<!-- ========================================================================= -->
+<section class="py-12 px-6 max-w-7xl mx-auto w-full" id="download">
+<div class="relative p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#120B20] via-surfaceContainerLow to-[#07090E] border-2 border-theme-primary/50 overflow-hidden shadow-2xl">
+<!-- Glowing Ambient Accents Behind Download Card -->
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full filter blur-3xl opacity-30 pointer-events-none" style="background: radial-gradient(circle, var(--color-primary), transparent 70%);"></div>
+<div class="absolute -left-16 -bottom-16 w-80 h-80 rounded-full filter blur-3xl opacity-20 pointer-events-none" style="background: radial-gradient(circle, var(--color-secondary), transparent 70%);"></div>
+<div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+<div class="max-w-2xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-theme-primary/20 text-theme-primary border border-theme-primary/40 font-mono text-[10px] font-bold uppercase mb-4">
+<span class="w-2 h-2 rounded-full bg-theme-primary animate-ping"></span>
+              OFFICIAL ANDROID AUDIOPHILE BUILD
+            </div>
+<h3 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Experience Lotus Player on <span class="text-theme-secondary">Android</span></h3>
+<p class="text-sm text-gray-300 mt-3 leading-relaxed">
+              Install the high-resolution direct-to-DAC lossless build. Equipped with ALSA hardware bypass, 384kHz DSD512 bit-perfect transport, cooperative 120Hz display refresh locking, and zero background telemetry.
+            </p>
+<!-- Verified Badges Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
+<div class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+<div class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34D399]"></div>
+<div class="text-[11px] font-mono leading-tight">
+<span class="text-white font-bold block">Bit-Perfect APK</span>
+<span class="text-theme-primary text-[9px] font-bold">384kHz • DSD512</span>
+</div>
+</div>
+<div class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+<div class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22D3EE]"></div>
+<div class="text-[11px] font-mono leading-tight">
+<span class="text-white font-bold block">120Hz VSYNC</span>
+<span class="text-theme-secondary text-[9px] font-bold">Zero-Jank Choreography</span>
+</div>
+</div>
+<div class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+<div class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_#C084FC]"></div>
+<div class="text-[11px] font-mono leading-tight">
+<span class="text-white font-bold block">Android 9 to 15+</span>
+<span class="text-theme-primary text-[9px] font-bold">Universal Arm64-v8a</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Download APK CTA Buttons Suite -->
+<div class="flex flex-col sm:flex-row lg:flex-col gap-3.5 w-full lg:w-auto flex-shrink-0">
+<a class="jewel-download-glow px-8 py-5 rounded-2xl text-black font-black text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-3.5 shadow-2xl group" href="https://github.com/LotusPlayer/lotus_player/releases/latest/download/LotusPlayer_RiseAndBloom_v3.2.0.apk" id="downloadDirectApkBtn" download>
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24">
+<path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"></path>
+</svg>
+<div class="text-left">
+<span class="block text-[10px] font-mono tracking-widest text-black/80 font-bold">DIRECT PRODUCTION APK</span>
+<span class="text-base font-black">Download Lotus Player APK</span>
+</div>
+<span class="text-[10px] font-mono px-2 py-1 rounded bg-black/20 text-black font-bold ml-1">59 MB</span>
+</a>
+<div class="flex items-center justify-between px-3 text-[10px] font-mono text-gray-400">
+<span>SHA-256 Verified Clean</span>
+<span class="text-emerald-400 font-bold">● Production v3.2.0</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- 11.5 DIRECT AUDIOPHILE FEEDBACK & FEATURE REQUESTS SANCTUARY -->
+<!-- ========================================================================= -->
+<section class="py-12 px-6 max-w-4xl mx-auto w-full" id="feedback">
+  <div class="relative p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-[#0E131E] via-[#070B14] to-[#04060A] border-2 border-theme-primary/45 shadow-[0_20px_60px_rgba(0,0,0,0.95),0_0_35px_rgba(var(--color-primary-rgb),0.25)] overflow-hidden">
+    <!-- Ambient Radial Glows -->
+    <div class="absolute -right-20 -top-20 w-72 h-72 rounded-full filter blur-3xl opacity-25 pointer-events-none" style="background: radial-gradient(circle, var(--color-primary), transparent 70%);"></div>
+    <div class="absolute -left-20 -bottom-20 w-72 h-72 rounded-full filter blur-3xl opacity-20 pointer-events-none" style="background: radial-gradient(circle, var(--color-secondary), transparent 70%);"></div>
+
+    <div class="relative z-10">
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-theme-primary/15 text-theme-primary border border-theme-primary/40 font-mono text-[10px] font-bold uppercase mb-3">
+            <span class="w-2 h-2 rounded-full bg-theme-secondary animate-pulse"></span>
+            DIRECT CREATOR INBOX
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            Share Your <span class="text-theme-primary">Feedback</span> &amp; <span class="text-theme-secondary">Feature Requests</span>
+          </h3>
+          <p class="text-xs sm:text-sm text-gray-300 mt-1.5 leading-relaxed">
+            Have a feature idea, DSP tuning request, or hardware DAC feedback? Send your thoughts directly to the developer at <strong class="text-theme-secondary font-mono">souljalazian@gmail.com</strong>.
+          </p>
+        </div>
+
+        <!-- Direct Email Pill Badge -->
+        <button type="button" onclick="copyFeedbackEmail()" class="self-start sm:self-center px-3.5 py-2 rounded-xl bg-theme-primary/10 border border-theme-primary/40 hover:border-theme-primary flex items-center gap-2 text-xs font-mono text-theme-primary hover:text-white transition-all group shadow-sm flex-shrink-0" title="Click to copy souljalazian@gmail.com">
+          <svg class="w-4 h-4 text-theme-primary group-hover:scale-110 transition-transform fill-current" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span class="font-bold text-[11px] text-theme-primary group-hover:text-white">souljalazian@gmail.com</span>
+          <span class="text-[9px] px-1.5 py-0.5 rounded bg-theme-primary/20 text-theme-primary group-hover:bg-theme-primary group-hover:text-black font-bold transition-colors">COPY</span>
+        </button>
+      </div>
+
+      <!-- Feedback Form -->
+      <form id="lotusFeedbackForm" onsubmit="event.preventDefault(); sendFeedbackToGmail('client');" class="space-y-4">
+        <!-- 1. Category Dropdown Menu Field -->
+        <div class="space-y-1.5">
+          <label class="block text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-between text-gray-200">
+            <span class="flex items-center gap-2 text-theme-primary">
+              <span class="w-2 h-2 rounded-full bg-theme-primary shadow-[0_0_8px_var(--color-primary)]"></span>
+              Feedback Category Menu
+            </span>
+            <span class="text-theme-secondary text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-theme-secondary/10 border border-theme-secondary/30">SELECT FIELD</span>
+          </label>
+          <div class="relative">
+            <select id="feedbackCategory" class="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-theme-primary focus:ring-1 focus:ring-theme-primary text-white text-sm font-sans appearance-none cursor-pointer transition-colors outline-none pr-10">
+              <option value="🌟 Feature Request (Audio Engine / UI Idea)" selected>🌟 Feature Request (New Audio Engine, DSP Preset or UI Idea)</option>
+              <option value="🎧 Audiophile Feedback (Sound Quality / DAC / ALSA)">🎧 Audiophile Feedback (Sound Quality, DAC Pairing, ALSA Bypass)</option>
+              <option value="🐛 Bug Report (Playback, Gestures, Performance)">🐛 Bug Report (Playback Hitch, Gesture Sensitivity, UI Glitch)</option>
+              <option value="🎨 Theme & Visual Styling Feedback">🎨 Theme & Visual Styling (Petal Themes, AMOLED Obsidian Modes)</option>
+              <option value="⚡ 120Hz VSYNC & Gesture Choreography">⚡ 120Hz VSYNC & Edge Kinetic Gestures Feedback</option>
+              <option value="🪷 General Praise & Impressions">🪷 General Praise, Impressions & Greetings</option>
+            </select>
+            <div class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-theme-primary">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Dual Inputs: Sender Name & Email -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-mono font-bold uppercase tracking-wider text-gray-200 flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-theme-primary shadow-[0_0_6px_var(--color-primary)]"></span>
+              <span class="text-theme-primary font-bold">Your Name / Audiophile Handle</span>
+            </label>
+            <input type="text" id="feedbackName" placeholder="e.g. LotusVoyager" class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-theme-primary focus:ring-1 focus:ring-theme-primary text-white text-sm transition-colors outline-none placeholder:text-gray-500">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-mono font-bold uppercase tracking-wider text-gray-200 flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-theme-secondary shadow-[0_0_6px_var(--color-secondary)]"></span>
+                <span class="text-theme-secondary font-bold">Your Email (Optional)</span>
+              </span>
+              <span class="text-theme-primary text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-theme-primary/10 border border-theme-primary/30">DIRECT REPLY</span>
+            </label>
+            <input type="email" id="feedbackEmail" placeholder="your.email@domain.com" class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-theme-primary focus:ring-1 focus:ring-theme-primary text-white text-sm transition-colors outline-none placeholder:text-gray-500">
+          </div>
+        </div>
+
+        <!-- 3. Subject Headline -->
+        <div class="space-y-1.5">
+          <label class="block text-xs font-mono font-bold uppercase tracking-wider text-gray-200 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-theme-primary shadow-[0_0_6px_var(--color-primary)]"></span>
+            <span class="text-theme-primary font-bold">Headline / Subject</span>
+          </label>
+          <input type="text" id="feedbackSubject" placeholder="Brief summary of your feedback or request" class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-theme-primary focus:ring-1 focus:ring-theme-primary text-white text-sm transition-colors outline-none placeholder:text-gray-500">
+        </div>
+
+        <!-- 4. Message Content -->
+        <div class="space-y-1.5">
+          <label class="block text-xs font-mono font-bold uppercase tracking-wider text-gray-200 flex items-center justify-between">
+            <span class="flex items-center gap-2 text-theme-secondary">
+              <span class="w-2 h-2 rounded-full bg-theme-secondary shadow-[0_0_8px_var(--color-secondary)]"></span>
+              <span class="text-theme-secondary font-bold">Feedback Details</span>
+            </span>
+            <span class="text-theme-secondary text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-theme-secondary/10 border border-theme-secondary/30">DELIVERED TO SOULJALAZIAN@GMAIL.COM</span>
+          </label>
+          <textarea id="feedbackMessage" rows="4" placeholder="Write your ideas, device specs, DAC model, or questions here..." class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-theme-primary focus:ring-1 focus:ring-theme-primary text-white text-sm transition-colors outline-none placeholder:text-gray-500 resize-y"></textarea>
+        </div>
+
+        <!-- 5. Action Buttons Suite (Themed Label Colors by Default) -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+          <!-- Primary Send Button -->
+          <button type="button" onclick="sendFeedbackToGmail('client')" class="flex-1 py-3.5 px-6 rounded-2xl btn-feedback-primary font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-lg group">
+            <svg class="w-4 h-4 fill-current transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+            <span class="tracking-wider">SEND TO SOULJALAZIAN@GMAIL.COM</span>
+          </button>
+
+          <!-- Direct Gmail Web Button -->
+          <button type="button" onclick="sendFeedbackToGmail('web')" class="py-3.5 px-5 rounded-2xl btn-feedback-secondary text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm group" title="Compose Directly in Gmail Web">
+            <svg class="w-4 h-4 fill-current transition-transform group-hover:scale-110" viewBox="0 0 24 24">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <span class="tracking-wider">OPEN IN GMAIL WEB</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Trust & Privacy Footnote -->
+      <div class="flex items-center justify-between text-[10px] font-mono text-gray-500 mt-4 pt-3 border-t border-white/5">
+        <span class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-theme-primary shadow-[0_0_6px_var(--color-primary)]"></span>
+          Direct routing to <strong class="text-theme-primary font-bold">souljalazian@gmail.com</strong>
+        </span>
+        <span class="text-theme-secondary/80">Zero intermediate telemetry or 3rd-party tracking</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Space for fixed bottom deck -->
+<div class="h-36"></div>
+
+<!-- ========================================================================= -->
+<!-- 12. 3D QUANTUM FLIP IN/OUT MAGNIFICENT AUDIOPHILE BOTTOM DECK -->
+<!-- ========================================================================= -->
+<div class="fixed bottom-0 left-0 right-0 z-40 px-3 sm:px-4 pb-3 sm:pb-4 pointer-events-auto deck-3d-stage">
+  <div class="max-w-4xl mx-auto flex flex-col items-center">
+    
+    <!-- Sculpted Beveled Collapse/Expand Tab Handle -->
+    <div class="flex justify-center -mb-[1px] z-10">
+      <button class="deck-beveled-handle group" onclick="toggleDeckCollapse()" title="Toggle Deck Horizon">
+        <div class="deck-handle-bar w-6 group-hover:w-8 shadow-[0_0_8px_rgba(var(--color-primary-rgb),0.6)]" id="deckHandleBar"></div>
+      </button>
+    </div>
+
+    <!-- 3D Flip In/Out Capsule Console -->
+    <div class="deck-flip-container deck-expanded w-full" id="magnificentDeckWrapper">
+      <div class="p-3 sm:p-4 rounded-3xl bg-[#070B14] border-2 border-theme-primary/60 shadow-[0_16px_45px_rgba(0,0,0,0.95),0_0_30px_rgba(var(--color-primary-rgb),0.35),0_0_40px_rgba(var(--color-secondary-rgb),0.2)] transition-colors" id="magnificentDeckBody">
+        <div class="flex items-center justify-between gap-3 sm:gap-4">
+          
+          <!-- 1. Vinyl Turntable Concentric Artwork Stage -->
+          <div class="relative w-12 h-12 flex-shrink-0 cursor-pointer group" onclick="togglePlayPause()" title="Play / Pause">
+            <!-- Pulsing Aura -->
+            <div class="absolute inset-0 rounded-full filter blur-md opacity-75 group-hover:opacity-100 transition-opacity" style="background: radial-gradient(circle, var(--color-primary), var(--color-secondary));"></div>
+            <!-- Outer Vinyl Ring -->
+            <div class="relative w-full h-full rounded-full border-2 border-theme-primary p-0.5 bg-black flex items-center justify-center">
+              <div class="w-full h-full rounded-full turntable-spinning overflow-hidden flex items-center justify-center bg-surfaceContainerLow" id="deckTurntableDisc">
+                <img alt="Now playing album art" class="w-full h-full object-contain filter drop-shadow-[0_0_4px_rgba(var(--color-primary-rgb),0.9)]" src="assets/images/lotus_flower.png"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Title, Live Waveform, Codec & Dual Monospace Time -->
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-bold text-white truncate" id="deckSongTitle">Resonance of Bloom (Lotus Mood 528Hz)</span>
+              <!-- Live Dancing Equalizer Micro-Waveform -->
+              <div class="flex items-end gap-0.5 h-3 flex-shrink-0" id="deckLiveWaveform">
+                <span class="w-0.5 bg-theme-primary rounded-full h-2 animate-bounce"></span>
+                <span class="w-0.5 bg-theme-secondary rounded-full h-3 animate-bounce" style="animation-delay: 0.15s;"></span>
+                <span class="w-0.5 bg-amber-400 rounded-full h-1.5 animate-bounce" style="animation-delay: 0.3s;"></span>
+                <span class="w-0.5 bg-emerald-400 rounded-full h-2.5 animate-bounce" style="animation-delay: 0.2s;"></span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-400 mt-1 font-mono">
+              <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/10 text-theme-primary border border-theme-primary" id="deckCodecBadge">DSD 512</span>
+              <span class="text-theme-secondary font-bold text-[11px]" id="deckTimeDisplay">01:42 / 04:18</span>
+            </div>
+          </div>
+
+          <!-- 3. Complete Transport Suite: [Heart Fav] -> [Prev] -> [Play/Pause Jewel Orb] -> [Next] (NO Volume) -->
+          <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+            <!-- 1. Heart Favorite Button -->
+            <button class="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-theme-secondary hover:scale-110 active:scale-95 transition-all shadow-sm" id="deckFavBtn" onclick="toggleFavorite()" title="Toggle Favorite">
+              <span id="deckFavIcon">❤️</span>
+            </button>
+            <!-- 2. Previous Track -->
+            <button class="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white hover:text-theme-primary hover:border-theme-primary/50 active:scale-95 transition-all" onclick="triggerPreviousSong()" title="Previous Track">
+              <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"></path></svg>
+            </button>
+            <!-- 3. Glowing Play/Pause Centerpiece Jewel Orb -->
+            <button class="w-10 h-10 rounded-full bg-gradient-to-r from-theme-primary to-theme-secondary text-black flex items-center justify-center shadow-[0_0_22px_rgba(var(--color-primary-rgb),0.65)] hover:scale-108 active:scale-95 transition-transform" id="deckPlayPauseBtn" onclick="togglePlayPause()" title="Play / Pause">
+              <svg class="w-5 h-5 fill-current" id="deckPlayIcon" viewbox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+            </button>
+            <!-- 4. Skip Next Track -->
+            <button class="w-8 h-8 rounded-full bg-white/5 border border-white/15 flex items-center justify-center text-white hover:text-theme-primary hover:border-theme-primary/50 active:scale-95 transition-all" onclick="triggerNextSong()" title="Next Track">
+              <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- 4. Luminous Laser Scrubber Bar -->
+        <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden relative mt-2.5 cursor-pointer group" onclick="scrubAudio(event)" title="Seek Position">
+          <div class="h-full rounded-full transition-all duration-150 relative" id="deckScrubberTrack" style="width: 39%; background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));">
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white border border-theme-primary shadow-[0_0_8px_white] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 13. SACRED LOTUS ASCENDER JEWEL (BACK TO TOP) -->
+<!-- ========================================================================= -->
+<div class="sacred-ascender-jewel group" onclick="scrollToTop()" title="Ascend: Back to Top">
+  <div class="sacred-inner-halo">
+    <!-- Double Ascending Crystalline Chevrons -->
+    <svg class="w-4 h-4 text-theme-primary transition-transform group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" d="M5 14l7-7 7 7"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" d="M5 20l7-7 7 7"></path>
+    </svg>
+    <!-- Sacred Lotus Seed Dot -->
+    <div class="sacred-lotus-seed"></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="glass-panel py-6 px-6 text-center text-xs font-mono text-gray-500 border-t border-white/10">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+<div class="flex items-center gap-2 text-gray-400">
+<span class="w-2 h-2 rounded-full bg-theme-primary"></span>
+<span>Developed By Souljalazian • 120 FPS Zero-Jank Engine</span>
+</div>
+<div class="flex items-center gap-3 text-gray-400">
+<a href="#feedback" class="hover:text-theme-secondary transition-colors text-theme-secondary font-bold flex items-center gap-1">
+  <span>✉️ Send Feedback to Creator</span>
+</a>
+<span class="text-gray-600">•</span>
+<p>Lotus Player v3.2.0 • Pure AMOLED Black (0.000 nits) • Lossless ALSA Audio</p>
+</div>
+</div>
+</footer>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 14. SCRIPT: THEMES SWITCHER, REAL-TIME AUDIO SYNTH, KINETIC GESTURES ENGINE -->
+<!-- ========================================================================= -->
+<script>
+    // Theme Definitions matching LotusThemeOption presets
+    const petalThemes = {
+      lotus_mood: {
+        name: "Lotus Mood (Default)",
+        trackTitle: "Resonance of Bloom (Lotus Mood 528Hz)",
+        toneDescription: "528Hz Solfeggio Miracle Chord",
+        primary: "#8A2BE2",
+        secondary: "#EC4899",
+        primaryRgb: "138, 43, 226",
+        secondaryRgb: "236, 72, 153",
+        synthType: "sine",
+        notes: [264, 528, 660, 792, 1056],
+        envelope: { attack: 0.08, decay: 0.4, sustain: 0.7, release: 1.8 }
+      },
+      cyber_bloom: {
+        name: "Cyber Bloom",
+        trackTitle: "Neon Arpeggio Matrix (Cyber Bloom)",
+        toneDescription: "Futuristic Analog Synth Bloom Chord",
+        primary: "#00F2FE",
+        secondary: "#FF2A8D",
+        primaryRgb: "0, 242, 254",
+        secondaryRgb: "255, 42, 141",
+        synthType: "sawtooth",
+        notes: [329.63, 440.0, 554.37, 659.25, 880.0],
+        filterFreq: 2400,
+        envelope: { attack: 0.02, decay: 0.25, sustain: 0.4, release: 1.2 }
+      },
+      starry_night: {
+        name: "Starry Night",
+        trackTitle: "Astral Odyssey 432Hz (Starry Night)",
+        toneDescription: "Cosmic Sub-Bass & 432Hz Bell Chime",
+        primary: "#3B82F6",
+        secondary: "#8B5CF6",
+        primaryRgb: "59, 130, 246",
+        secondaryRgb: "139, 92, 246",
+        synthType: "sine",
+        notes: [108.0, 216.0, 432.0, 864.0, 1296.0],
+        envelope: { attack: 0.12, decay: 0.6, sustain: 0.8, release: 2.4 }
+      },
+      solar_amber: {
+        name: "Solar Amber",
+        trackTitle: "Golden Radiance Tube Master (Solar Amber)",
+        toneDescription: "Warm Golden Tube Resonant Chime",
+        primary: "#FFB300",
+        secondary: "#FF5722",
+        primaryRgb: "255, 179, 0",
+        secondaryRgb: "255, 87, 34",
+        synthType: "triangle",
+        notes: [293.66, 369.99, 440.0, 587.33, 880.0],
+        envelope: { attack: 0.04, decay: 0.35, sustain: 0.6, release: 1.6 }
+      },
+      emerald_oasis: {
+        name: "Emerald Oasis",
+        trackTitle: "Zen Bamboo Sanctuary (Emerald Oasis)",
+        toneDescription: "Organic Kalimba Water-Droplet Chime",
+        primary: "#00E676",
+        secondary: "#00B0FF",
+        primaryRgb: "0, 230, 118",
+        secondaryRgb: "0, 176, 255",
+        synthType: "sine",
+        notes: [392.0, 523.25, 659.25, 783.99, 1046.5],
+        arpeggiate: true,
+        envelope: { attack: 0.01, decay: 0.45, sustain: 0.2, release: 1.5 }
+      },
+      velvet_rose: {
+        name: "Velvet Rose",
+        trackTitle: "Crimson Cello Nocturne (Velvet Rose)",
+        toneDescription: "Romantic Cello Triad with Velvet Decay",
+        primary: "#E11D48",
+        secondary: "#9333EA",
+        primaryRgb: "225, 29, 72",
+        secondaryRgb: "147, 51, 234",
+        synthType: "triangle",
+        notes: [164.81, 246.94, 329.63, 493.88, 659.25],
+        envelope: { attack: 0.15, decay: 0.5, sustain: 0.7, release: 2.0 }
+      },
+      volt_aura: {
+        name: "Volt Aura",
+        trackTitle: "Electric Pulse Kinetic (Volt Aura)",
+        toneDescription: "High-Energy Resonant Laser Arp Chime",
+        primary: "#A3E635",
+        secondary: "#06B6D4",
+        primaryRgb: "163, 230, 53",
+        secondaryRgb: "6, 182, 212",
+        synthType: "square",
+        notes: [349.23, 523.25, 698.46, 880.0, 1046.5],
+        filterFreq: 3200,
+        arpeggiate: true,
+        envelope: { attack: 0.01, decay: 0.2, sustain: 0.3, release: 0.9 }
+      },
+      whitaniana: {
+        name: "Whitaniana",
+        trackTitle: "Pure Porcelain Acoustic (Whitaniana)",
+        toneDescription: "Acoustic Verdi Emerald & Pure Contrast Chime",
+        primary: "#0284C7",
+        secondary: "#059669",
+        primaryRgb: "2, 132, 199",
+        secondaryRgb: "5, 150, 105",
+        synthType: "sine",
+        notes: [261.63, 329.63, 392.0, 523.25, 659.25],
+        filterFreq: 2800,
+        envelope: { attack: 0.04, decay: 0.35, sustain: 0.5, release: 1.6 }
+      }
+    };
+
+    // ==========================================
+    // REAL-TIME AUDIOPHILE WEB AUDIO ENGINE
+    // ==========================================
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContextClass();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playThemeAudioSample(themeKey) {
+      try {
+        const ctx = getAudioContext();
+        const theme = petalThemes[themeKey];
+        if (!theme) return;
+
+        const now = ctx.currentTime;
+        const masterGain = ctx.createGain();
+        masterGain.gain.setValueAtTime(0.28, now);
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(theme.filterFreq || 2800, now);
+
+        filter.connect(masterGain);
+        masterGain.connect(ctx.destination);
+
+        const notes = theme.notes;
+        const env = theme.envelope;
+
+        notes.forEach((freq, index) => {
+          const osc = ctx.createOscillator();
+          const noteGain = ctx.createGain();
+
+          osc.type = theme.synthType || "sine";
+          const detuneAmount = (index % 2 === 0 ? 1 : -1) * (index * 4.5);
+          osc.detune.setValueAtTime(detuneAmount, now);
+
+          const delay = theme.arpeggiate ? index * 0.045 : 0;
+          const startTime = now + delay;
+          const noteRelease = env.release;
+
+          osc.frequency.setValueAtTime(freq, startTime);
+
+          noteGain.gain.setValueAtTime(0.0001, startTime);
+          noteGain.gain.linearRampToValueAtTime(0.22 / notes.length, startTime + env.attack);
+          noteGain.gain.exponentialRampToValueAtTime(
+            Math.max(0.001, (0.22 / notes.length) * env.sustain),
+            startTime + env.attack + env.decay
+          );
+          noteGain.gain.exponentialRampToValueAtTime(0.00001, startTime + env.attack + env.decay + noteRelease);
+
+          osc.connect(noteGain);
+          noteGain.connect(filter);
+
+          osc.start(startTime);
+          osc.stop(startTime + env.attack + env.decay + noteRelease + 0.1);
+        });
+
+      } catch (err) {
+        console.warn("AudioContext init postponed:", err);
+      }
+    }
+
+    // Play tactile mechanical click / kinetic snap chime
+    function playKineticSnapSound(isRight = false) {
+      try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = isRight ? "triangle" : "sine";
+        osc.frequency.setValueAtTime(isRight ? 880 : 660, now);
+        osc.frequency.exponentialRampToValueAtTime(isRight ? 1320 : 990, now + 0.08);
+
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.24);
+      } catch (e) {}
+    }
+
+    // Apply Petal Spectral Theme dynamically
+    function applyPetalTheme(themeKey) {
+      const theme = petalThemes[themeKey];
+      if (!theme) return;
+
+      const isWhitaniana = (themeKey === 'whitaniana');
+      document.documentElement.classList.toggle('theme-whitaniana', isWhitaniana);
+
+      document.documentElement.style.setProperty('--color-primary', theme.primary);
+      document.documentElement.style.setProperty('--color-secondary', theme.secondary);
+      document.documentElement.style.setProperty('--color-primary-rgb', theme.primaryRgb);
+      document.documentElement.style.setProperty('--color-secondary-rgb', theme.secondaryRgb);
+      document.documentElement.style.setProperty('--theme-name', theme.name);
+
+      const badge = document.getElementById('currentThemeBadge');
+      if (badge) badge.textContent = theme.name;
+      
+      const toneBadge = document.getElementById('currentToneBadge');
+      if (toneBadge) toneBadge.textContent = theme.toneDescription;
+
+      document.querySelectorAll('.theme-card').forEach(card => {
+        if (card.getAttribute('data-theme') === themeKey) {
+          card.classList.remove('border-white/10');
+          card.classList.add('border-2', 'border-theme-primary', 'scale-105');
+        } else {
+          card.classList.remove('border-2', 'border-theme-primary', 'scale-105');
+          card.classList.add('border-white/10');
+        }
+      });
+
+      playThemeAudioSample(themeKey);
+
+      const deckTitle = document.getElementById('deckSongTitle');
+      if (deckTitle && theme.trackTitle) {
+        deckTitle.textContent = theme.trackTitle;
+      }
+      
+      const scrubber = document.getElementById('deckScrubberTrack');
+      if (scrubber) {
+        scrubber.style.background = `linear-gradient(90deg, ${theme.primary}, ${theme.secondary})`;
+      }
+
+      showToast(`♪ Sample: ${theme.name} — ${theme.toneDescription}`, isWhitaniana ? "💎" : "🌸");
+    }
+
+    // =========================================================================
+    // KINETIC EDGE GESTURES ENGINE (PARABOLIC ARCH + SNAPBACK CARD + HUD)
+    // =========================================================================
+    let activeDragSide = null; // 'left' | 'right' | null
+    let dragExtent = 0; // 0 to 180px
+    let dragTouchY = window.innerHeight * 0.48;
+    const LATCH_THRESHOLD = 80; // px threshold for execution
+
+    function renderKineticArch(side, extent, touchY) {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const y = Math.max(140, Math.min(touchY, h - 180));
+      const halfHeight = 140;
+      const topY = y - halfHeight;
+      const botY = y + halfHeight;
+      const isLeft = (side === 'left');
+      const isLatched = extent >= LATCH_THRESHOLD;
+      const pullPercent = Math.min(100, Math.round((extent / LATCH_THRESHOLD) * 100));
+
+      const pathElem = document.getElementById(isLeft ? 'leftArchPath' : 'rightArchPath');
+      const bullseyeGroup = document.getElementById(isLeft ? 'leftBullseyeGroup' : 'rightBullseyeGroup');
+      const cardElem = document.getElementById(isLeft ? 'leftSnapbackCard' : 'rightSnapbackCard');
+      const hudElem = document.getElementById('telemetryHud');
+
+      if (extent <= 2) {
+        // Hide
+        if (pathElem) pathElem.setAttribute('opacity', '0');
+        if (bullseyeGroup) bullseyeGroup.setAttribute('opacity', '0');
+        if (cardElem) {
+          cardElem.classList.add('opacity-0', 'pointer-events-none');
+          cardElem.classList.remove('opacity-100');
+        }
+        if (hudElem) {
+          hudElem.classList.add('opacity-0');
+          hudElem.classList.remove('opacity-100');
+        }
+        return;
+      }
+
+      // Parabolic Horn Bezier Calculations
+      let d = "";
+      let pullX = 0;
+      if (isLeft) {
+        pullX = extent;
+        d = `M 0 ${topY} C ${extent * 0.15} ${y - 85}, ${extent * 0.75} ${y - 35}, ${pullX} ${y} C ${extent * 0.75} ${y + 35}, ${extent * 0.15} ${y + 85}, 0 ${botY} Z`;
+      } else {
+        pullX = w - extent;
+        d = `M ${w} ${topY} C ${w - extent * 0.15} ${y - 85}, ${w - extent * 0.75} ${y - 35}, ${pullX} ${y} C ${w - extent * 0.75} ${y + 35}, ${w - extent * 0.15} ${y + 85}, ${w} ${botY} Z`;
+      }
+
+      if (pathElem) {
+        pathElem.setAttribute('d', d);
+        pathElem.setAttribute('opacity', isLatched ? '1' : '0.85');
+        pathElem.setAttribute('stroke-width', isLatched ? '2.8' : '1.8');
+      }
+
+      // Bullseye Position
+      if (bullseyeGroup) {
+        bullseyeGroup.setAttribute('opacity', '1');
+        bullseyeGroup.setAttribute('transform', `translate(${pullX}, ${y})`);
+      }
+
+      // Snapback Target Card Tracking
+      if (cardElem) {
+        cardElem.classList.remove('opacity-0', 'pointer-events-none');
+        cardElem.classList.add('opacity-100');
+        
+        const cardY = Math.max(70, Math.min(y - 65, h - 230));
+        cardElem.style.top = `${cardY}px`;
+        if (isLeft) {
+          cardElem.style.left = `${pullX + 18}px`;
+          cardElem.style.right = 'auto';
+          document.getElementById('leftPullPill').textContent = `PULL: ${pullPercent}% ılı`;
+        } else {
+          cardElem.style.right = `${extent + 18}px`;
+          cardElem.style.left = 'auto';
+          document.getElementById('rightPullPill').textContent = `PULL: ${pullPercent}% ılı`;
+        }
+      }
+
+      // Telemetry HUD Update
+      if (hudElem) {
+        hudElem.classList.remove('opacity-0');
+        hudElem.classList.add('opacity-100');
+        
+        const accentColor = isLeft ? '#00F2FE' : '#FF007F';
+        hudElem.style.borderColor = isLatched ? accentColor : 'rgba(255,255,255,0.15)';
+        
+        const pulseDot = document.getElementById('telemetryPulseDot');
+        pulseDot.style.backgroundColor = accentColor;
+        pulseDot.style.boxShadow = `0 0 10px ${accentColor}`;
+
+        const statusPill = document.getElementById('telemetryStatusPill');
+        statusPill.textContent = isLatched ? 'LOCKED' : 'ARMED';
+        statusPill.style.color = accentColor;
+        statusPill.style.borderColor = accentColor;
+        statusPill.style.backgroundColor = isLatched ? (isLeft ? 'rgba(0,242,254,0.25)' : 'rgba(255,0,127,0.25)') : 'transparent';
+
+        document.getElementById('telemetryTitle').textContent = isLeft 
+          ? 'LEFT EDGE KINETIC ARCH [SOURCE LATCH..]' 
+          : 'RIGHT EDGE KINETIC ARCH [RETURN LATCH..]';
+        document.getElementById('telemetryTitle').style.color = accentColor;
+
+        const dxVal = isLeft ? Math.round(extent) : -Math.round(extent);
+        document.getElementById('telemetryDx').textContent = `DX: ${dxVal > 0 ? '+' : ''}${dxVal}PX`;
+        document.getElementById('telemetryDeflection').textContent = `${pullPercent}% DEFLECTION`;
+        
+        const latchState = document.getElementById('telemetryLatchState');
+        latchState.textContent = isLatched ? 'LATCH ENGAGED' : 'DEFLECTING';
+        latchState.style.color = isLatched ? accentColor : '#9CA3AF';
+
+        document.getElementById('telemetryGuidance').textContent = isLeft 
+          ? 'Release thumb to jump: Resonance Pulse (Stem Deck)' 
+          : 'Release thumb to snap forward: Underground Stash #09';
+      }
+    }
+
+    // Execute snapback action
+    function executeSnapback(side) {
+      const isLeft = (side === 'left');
+      playKineticSnapSound(!isLeft);
+      
+      if (isLeft) {
+        showToast("Left Bezel Executed: Jumped to Active Playback Source 🪷", "⏪");
+        window.scrollBy({ top: -400, behavior: 'smooth' });
+      } else {
+        const crate = ["Underground Stash #09", "Studio Masters DSD", "432Hz Binaural Mix"][Math.floor(Math.random() * 3)];
+        showToast(`Right Bezel Executed: Snapped to "${crate}" ⚡`, "⏩");
+      }
+
+      // Smooth collapse animation
+      let cur = dragExtent || 100;
+      const anim = setInterval(() => {
+        cur -= 18;
+        if (cur <= 0) {
+          clearInterval(anim);
+          renderKineticArch(side, 0, dragTouchY);
+          activeDragSide = null;
+          dragExtent = 0;
+        } else {
+          renderKineticArch(side, cur, dragTouchY);
+        }
+      }, 16);
+    }
+
+    // Mouse & Touch Edge Gesture Event Listeners
+    function setupEdgeGestures() {
+      const leftBezel = document.getElementById('leftKineticBezel');
+      const rightBezel = document.getElementById('rightKineticBezel');
+
+      let startX = 0;
+      let isDragging = false;
+
+      function onPointerDown(e, side) {
+        activeDragSide = side;
+        isDragging = true;
+        startX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        dragTouchY = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight * 0.5;
+        dragExtent = 25;
+        renderKineticArch(side, dragExtent, dragTouchY);
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging || !activeDragSide) return;
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY) || dragTouchY;
+        dragTouchY = clientY;
+
+        if (activeDragSide === 'left') {
+          dragExtent = Math.max(0, Math.min(180, clientX));
+        } else {
+          dragExtent = Math.max(0, Math.min(180, window.innerWidth - clientX));
+        }
+        renderKineticArch(activeDragSide, dragExtent, dragTouchY);
+      }
+
+      function onPointerUp() {
+        if (!isDragging || !activeDragSide) return;
+        isDragging = false;
+        if (dragExtent >= LATCH_THRESHOLD) {
+          executeSnapback(activeDragSide);
+        } else {
+          renderKineticArch(activeDragSide, 0, dragTouchY);
+          activeDragSide = null;
+          dragExtent = 0;
+        }
+      }
+
+      // Left bezel handlers
+      if (leftBezel) {
+        leftBezel.addEventListener('mousedown', (e) => onPointerDown(e, 'left'));
+        leftBezel.addEventListener('touchstart', (e) => onPointerDown(e, 'left'), { passive: true });
+        leftBezel.addEventListener('click', () => simulateKineticEdge('left'));
+      }
+
+      // Right bezel handlers
+      if (rightBezel) {
+        rightBezel.addEventListener('mousedown', (e) => onPointerDown(e, 'right'));
+        rightBezel.addEventListener('touchstart', (e) => onPointerDown(e, 'right'), { passive: true });
+        rightBezel.addEventListener('click', () => simulateKineticEdge('right'));
+      }
+
+      window.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('touchmove', onPointerMove, { passive: true });
+      window.addEventListener('mouseup', onPointerUp);
+      window.addEventListener('touchend', onPointerUp);
+    }
+    setupEdgeGestures();
+
+    // Demonstration Simulator Helper
+    function simulateKineticEdge(side) {
+      activeDragSide = side;
+      dragTouchY = window.innerHeight * 0.48;
+      let ext = 0;
+      const targetExt = 115;
+      playKineticSnapSound(side === 'right');
+
+      const growAnim = setInterval(() => {
+        ext += 12;
+        if (ext >= targetExt) {
+          clearInterval(growAnim);
+          renderKineticArch(side, targetExt, dragTouchY);
+          setTimeout(() => {
+            executeSnapback(side);
+          }, 1100);
+        } else {
+          renderKineticArch(side, ext, dragTouchY);
+        }
+      }, 16);
+    }
+
+    function updateDemoDeflection(side, val) {
+      const num = parseInt(val, 10);
+      const isLeft = (side === 'left');
+      const labelElem = document.getElementById(isLeft ? 'leftDemoVal' : 'rightDemoVal');
+      const isLatched = num >= 55;
+      
+      labelElem.textContent = `PULL: ${num}% (${isLatched ? 'LATCHED' : 'DEFLECTING'})`;
+      labelElem.className = isLatched 
+        ? (isLeft ? 'text-cyan-400 font-black' : 'text-pink-400 font-black') 
+        : 'text-gray-400 font-bold';
+
+      const extentPx = (num / 100) * 140;
+      renderKineticArch(side, extentPx, window.innerHeight * 0.48);
+    }
+
+    // Toast Notification helper
+    let toastTimeout;
+    function showToast(message, icon = "✨") {
+      const toast = document.getElementById('gestureToast');
+      document.getElementById('toastMessage').textContent = message;
+      document.getElementById('toastIcon').textContent = icon;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2100);
+    }
+
+    // Scroll to Top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast("Ascending: Back to Top of Sanctuary", "🪷");
+    }
+
+    // Direct Feedback to souljalazian@gmail.com
+    function sendFeedbackToGmail(target = 'client') {
+      const categoryElem = document.getElementById('feedbackCategory');
+      const category = categoryElem ? categoryElem.value : '🌟 Feature Request';
+      const name = (document.getElementById('feedbackName')?.value || '').trim() || 'Lotus Audiophile';
+      const email = (document.getElementById('feedbackEmail')?.value || '').trim();
+      const subject = (document.getElementById('feedbackSubject')?.value || '').trim() || 'Lotus Player Feedback';
+      const message = (document.getElementById('feedbackMessage')?.value || '').trim();
+
+      if (!message) {
+        showToast("Please enter your feedback message ✍️", "⚠️");
+        document.getElementById('feedbackMessage')?.focus();
+        return;
+      }
+
+      const recipient = "souljalazian@gmail.com";
+      const fullSubject = `[Lotus Player Feedback] ${category}: ${subject}`;
+      const bodyContent = `Hello Souljalazian,
+
+I would like to share the following feedback regarding Lotus Player:
+
+--------------------------------------------------
+Sender Name: ${name}
+Sender Email: ${email ? email : 'Not provided'}
+Category: ${category}
+Date & Time: ${new Date().toLocaleString()}
+--------------------------------------------------
+
+Message:
+${message}
+
+--------------------------------------------------
+Sent directly from the Lotus Player Web Portal`;
+
+      const encodedSubject = encodeURIComponent(fullSubject);
+      const encodedBody = encodeURIComponent(bodyContent);
+
+      if (target === 'web') {
+        const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${encodedSubject}&body=${encodedBody}`;
+        window.open(gmailWebUrl, '_blank');
+        showToast("Opening Gmail Web to send to souljalazian@gmail.com ✉️", "🪷");
+      } else {
+        const mailtoUri = `mailto:${recipient}?subject=${encodedSubject}&body=${encodedBody}`;
+        window.location.href = mailtoUri;
+        showToast("Opening Email client to send to souljalazian@gmail.com ✉️", "🪷");
+      }
+    }
+
+    function copyFeedbackEmail() {
+      const email = "souljalazian@gmail.com";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(() => {
+          showToast(`Copied ${email} to clipboard! 📋`, "✅");
+        }).catch(() => {
+          showToast(`Direct Email: ${email}`, "📧");
+        });
+      } else {
+        showToast(`Direct Email: ${email}`, "📧");
+      }
+    }
+
+    // Lotus Flower interactive tap: Triggers 432Hz harmonic chime
+    function pulseLotusFlower() {
+      applyPetalTheme('lotus_mood');
+      showToast("Sacred Resonance: 432Hz/528Hz Harmonic Phase Engaged", "🪷");
+    }
+
+    // Bottom Deck Controls
+    let isPlaying = true;
+    function togglePlayPause() {
+      isPlaying = !isPlaying;
+      const playIcon = document.getElementById('deckPlayIcon');
+      const disc = document.getElementById('deckTurntableDisc');
+      const liveWave = document.getElementById('deckLiveWaveform');
+
+      if (isPlaying) {
+        playIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+        disc.classList.remove('turntable-paused');
+        liveWave.style.opacity = '1';
+        showToast("Playback Resumed: 384kHz ALSA Direct", "▶️");
+      } else {
+        playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+        disc.classList.add('turntable-paused');
+        liveWave.style.opacity = '0.3';
+        showToast("Playback Paused", "⏸️");
+      }
+    }
+
+    let isFav = true;
+    function toggleFavorite() {
+      isFav = !isFav;
+      document.getElementById('deckFavIcon').textContent = isFav ? "❤️" : "🤍";
+      showToast(isFav ? "Saved to Favorites Vault" : "Removed from Favorites Vault", isFav ? "❤️" : "🤍");
+    }
+
+    const playlistDemo = [
+      "Resonance of Bloom (Lotus Mood 528Hz)",
+      "Neon Arpeggio Matrix (Cyber Bloom)",
+      "Astral Odyssey 432Hz (Starry Night)",
+      "Golden Radiance Tube Master (Solar Amber)",
+      "Zen Bamboo Sanctuary (Emerald Oasis)",
+      "Crimson Cello Nocturne (Velvet Rose)",
+      "Electric Pulse Kinetic (Volt Aura)",
+      "Pure Porcelain Acoustic (Whitaniana)"
+    ];
+    let songIdx = 0;
+
+    function triggerNextSong() {
+      songIdx = (songIdx + 1) % playlistDemo.length;
+      document.getElementById('deckSongTitle').textContent = playlistDemo[songIdx];
+      showToast(`Next Track: "${playlistDemo[songIdx]}"`, "⏭️");
+    }
+
+    function triggerPreviousSong() {
+      songIdx = (songIdx - 1 + playlistDemo.length) % playlistDemo.length;
+      document.getElementById('deckSongTitle').textContent = playlistDemo[songIdx];
+      showToast(`Previous Track: "${playlistDemo[songIdx]}"`, "⏮️");
+    }
+
+    let isDeckCollapsed = false;
+    function toggleDeckCollapse() {
+      isDeckCollapsed = !isDeckCollapsed;
+      const deckWrapper = document.getElementById('magnificentDeckWrapper');
+      const handleBar = document.getElementById('deckHandleBar');
+
+      if (isDeckCollapsed) {
+        if (deckWrapper) {
+          deckWrapper.classList.remove('deck-expanded');
+          deckWrapper.classList.add('deck-collapsed');
+        }
+        if (handleBar) {
+          handleBar.classList.remove('w-6');
+          handleBar.classList.add('w-10');
+          handleBar.style.boxShadow = '0 0 16px var(--color-primary), 0 0 22px var(--color-secondary)';
+        }
+        showToast("Bottom Deck: Flipped to Docked Stealth Mode 🪷", "🔽");
+      } else {
+        if (deckWrapper) {
+          deckWrapper.classList.remove('deck-collapsed');
+          deckWrapper.classList.add('deck-expanded');
+        }
+        if (handleBar) {
+          handleBar.classList.remove('w-10');
+          handleBar.classList.add('w-6');
+          handleBar.style.boxShadow = '0 0 8px rgba(var(--color-primary-rgb),0.6)';
+        }
+        showToast("Bottom Deck: Unfolded 3D Console ⚡", "🔼");
+      }
+    }
+
+    function scrubAudio(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      document.getElementById('deckScrubberTrack').style.width = (ratio * 100) + '%';
+      showToast(`Seeked to ${(ratio * 100).toFixed(0)}%`, "⏱️");
+    }
+
+    // Generate Spectrum Visualizer Bars
+    (function initSpectrum() {
+      const container = document.getElementById('heroSpectrumVisualizer');
+      if (!container) return;
+      container.innerHTML = '';
+      for (let i = 0; i < 14; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'w-1.5 rounded-full transition-all duration-75 flex-1';
+        bar.style.backgroundColor = (i % 2 === 0) ? 'var(--color-primary)' : 'var(--color-secondary)';
+        bar.style.height = `${Math.floor(Math.random() * 24 + 6)}px`;
+        container.appendChild(bar);
+      }
+      setInterval(() => {
+        if (!isPlaying) return;
+        const bars = container.children;
+        for (let i = 0; i < bars.length; i++) {
+          const h = Math.floor(Math.sin((Date.now() / 140) + i * 0.45) * 12 + 16);
+          bars[i].style.height = `${h}px`;
+          bars[i].style.opacity = (h / 28).toFixed(2);
+        }
+      }, 70);
+    })();
+
+    // Animated Dot Matrix Canvas (Lotus Mood Canvas)
+    (function initCanvasMatrix() {
+      const canvas = document.getElementById('lotusMoodMatrixCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width, height;
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      let startTime = performance.now();
+      const dotColors = ['#8A2BE2', '#EC4899', '#00F2FE', '#FFB300'];
+
+      function render(now) {
+        const elapsed = (now - startTime) / 1000;
+        const progress = (elapsed % 18) / 18;
+        ctx.clearRect(0, 0, width, height);
+
+        const isWhitaniana = document.documentElement.classList.contains('theme-whitaniana');
+        ctx.fillStyle = isWhitaniana ? '#F5F7FB' : '#07090E';
+        ctx.fillRect(0, 0, width, height);
+
+        const activeDotColors = isWhitaniana
+          ? ['#0284C7', '#059669', '#38BDF8', '#94A3B8']
+          : dotColors;
+
+        const spacing = 34.0;
+        const cols = Math.ceil(width / spacing) + 1;
+        const rows = Math.ceil(height / spacing) + 1;
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const baseX = c * spacing;
+            const baseY = r * spacing;
+            const dotPhase = (r * 0.32) + (c * 0.26) + (progress * 2 * Math.PI);
+            const wave = Math.sin(dotPhase);
+            if (wave < -0.25) continue;
+
+            const opacity = Math.min(Math.max(0.04 + (0.32 * (wave + 0.25) / 1.25), 0.02), 0.38);
+            const radius = Math.min(Math.max(1.1 + (1.3 * Math.abs(wave)), 0.8), 2.8);
+            const driftX = baseX + Math.cos(dotPhase) * 5.0;
+            const driftY = baseY + Math.sin(dotPhase) * 5.0;
+
+            ctx.fillStyle = activeDotColors[(r + c) % 4];
+            ctx.globalAlpha = isWhitaniana ? Math.min(opacity * 0.7, 0.22) : opacity;
+            ctx.beginPath();
+            ctx.arc(driftX, driftY, radius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        ctx.globalAlpha = 1.0;
+        requestAnimationFrame(render);
+      }
+      requestAnimationFrame(render);
+    })();
+</script>
+</body></html>

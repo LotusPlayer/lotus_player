@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ==============================================================================
+     LOTUS PLAYER - DIRECT EMBLEM ADAPTIVE LAUNCHER ICON (ZERO LINKING ERROR)
+     File: android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+     ============================================================================== -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/lotus_launch_dark_bg" />
+    <foreground>
+        <inset
+            android:drawable="@drawable/lotus_app_icon"
+            android:inset="16%" />
+    </foreground>
+</adaptive-icon>

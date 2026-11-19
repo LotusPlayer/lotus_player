@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ================================================================= -->
+    <!-- PRE-EXISTING APP THEMES (PRESERVED VERBATIM)                      -->
+    <!-- ================================================================= -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@color/lotus_launch_dark_bg</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- ================================================================= -->
+    <!-- LOTUS MEDIA3 NOTIFICATION & REMOTEVIEWS STYLES (ADDITIVE MERGE)  -->
+    <!-- ================================================================= -->
+    <!-- Base Application Theme for Native Media3 Services / Fallbacks -->
+    <style name="Theme.LotusPlayer" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/lotus_notif_bg</item>
+        <item name="android:navigationBarColor">@color/lotus_notif_bg</item>
+        <item name="android:windowBackground">@color/lotus_notif_bg</item>
+    </style>
+
+    <!-- Custom Notification Styles for RemoteViews Fallback (Android 11 & 12) -->
+    <style name="LotusNotificationTitle">
+        <item name="android:textColor">@color/lotus_text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="LotusNotificationArtist">
+        <item name="android:textColor">@color/lotus_text_secondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="LotusNotificationTime">
+        <item name="android:textColor">@color/lotus_text_dim</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+</resources>

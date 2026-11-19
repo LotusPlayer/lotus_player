@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Solid only — NO icon here. The icon belongs in your Flutter
+         splash widget, not in the native launch window. Any drawable
+         here shows up as a picture before Flutter draws. -->
+    <item android:drawable="@color/lotus_launch_dark_bg" />
+</layer-list>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Playback Service & Notification Channel -->
+    <string name="lotus_playback_channel_name">Lotus Music Playback</string>
+    <string name="lotus_playback_channel_description">Continuous audio playback controls and media notification</string>
+
+    <!-- Notification Media Actions -->
+    <string name="lotus_action_play">Play</string>
+    <string name="lotus_action_pause">Pause</string>
+    <string name="lotus_action_next">Next Track</string>
+    <string name="lotus_action_prev">Previous Track</string>
+    <string name="lotus_action_favorite">Favorite</string>
+    <string name="lotus_action_stop">Stop</string>
+
+    <!-- Fallback Content Descriptions for Accessibility -->
+    <string name="lotus_desc_album_art">Album Artwork</string>
+    <string name="lotus_desc_scrubber">Playback Timeline</string>
+</resources>

@@ -1,0 +1,165 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ====================================================================== -->
+    <!-- 1. NOTIFICATIONS & FOREGROUND AUDIO PLAYBACK (ANDROID 13+ / 14+ / 15)   -->
+    <!-- ====================================================================== -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!-- ====================================================================== -->
+    <!-- 2. STORAGE & AUDIO ACCESS (SCOPED STORAGE & MEDIASTORE)                -->
+    <!-- ====================================================================== -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+
+    <!-- ====================================================================== -->
+    <!-- 3. HARDWARE DSP & AUDIO SETTINGS                                       -->
+    <!-- ====================================================================== -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" tools:ignore="ProtectedPermissions" />
+
+    <!-- ====================================================================== -->
+    <!-- 4. BLUETOOTH LDAC ROUTING & NETWORK CONTROLS                            -->
+    <!-- ====================================================================== -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- ====================================================================== -->
+    <!-- 5. PACKAGE VISIBILITY QUERIES (ANDROID 11+ / API 30+)                  -->
+    <!-- ====================================================================== -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND_MULTIPLE" />
+            <data android:mimeType="*/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="audio/*" />
+        </intent>
+    </queries>
+
+    <!-- ====================================================================== -->
+    <!-- APPLICATION CONFIGURATION                                               -->
+    <!-- ====================================================================== -->
+    <application
+        android:label="Lotus Player"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:requestLegacyExternalStorage="true"
+        android:enableOnBackInvokedCallback="true"
+        android:supportsRtl="true"
+        android:allowBackup="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize"
+            tools:targetApi="o_mr1">
+
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_MUSIC" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter android:label="Play in Lotus Player">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="audio/mpeg" />
+                <data android:mimeType="audio/mp3" />
+                <data android:mimeType="audio/flac" />
+                <data android:mimeType="audio/x-flac" />
+                <data android:mimeType="audio/wav" />
+                <data android:mimeType="audio/x-wav" />
+                <data android:mimeType="audio/aac" />
+                <data android:mimeType="audio/m4a" />
+                <data android:mimeType="audio/mp4" />
+                <data android:mimeType="audio/ogg" />
+                <data android:mimeType="audio/opus" />
+                <data android:mimeType="application/ogg" />
+                <data android:mimeType="application/x-ogg" />
+                <data android:mimeType="application/itunes" />
+                <data android:mimeType="audio/dsd" />
+                <data android:mimeType="audio/x-dsd" />
+                <data android:mimeType="audio/dsf" />
+                <data android:mimeType="audio/dff" />
+                <data android:mimeType="audio/alac" />
+                <data android:mimeType="audio/x-alac" />
+                <data android:mimeType="audio/ape" />
+                <data android:mimeType="audio/x-ape" />
+                <data android:mimeType="audio/aiff" />
+                <data android:mimeType="audio/x-aiff" />
+            </intent-filter>
+        </activity>
+
+        <!-- ====================================================================== -->
+        <!-- ANDROIDX MEDIA3 PLAYBACK SERVICE (ZERO-LAG NATIVE MEDIASESSION)        -->
+        <!-- ====================================================================== -->
+        <service
+            android:name=".LotusMediaPlaybackService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_lotus" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.souljalazian.lotus_player.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+</manifest>

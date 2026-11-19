@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+         ANDROID 12+ FORCES A SYSTEM SPLASH BEFORE FLUTTER CAN DRAW.
+         It cannot be disabled. The screenshot shows what it does:
+         it takes windowSplashScreenAnimatedIcon and crops it into
+         a circle in the middle of a black screen.
+         So we make it invisible: transparent icon + #080B11
+         background (the exact Flutter background). The result is
+         a plain dark screen that blends seamlessly into your real
+         Flutter splash — no circle, no picture flash.
+    -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <!-- Android 12+ system splash — INVISIBLE, not a Lotus icon -->
+        <item name="android:windowSplashScreenBackground">@color/lotus_launch_dark_bg</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/transparent_pixel</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/lotus_launch_dark_bg</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+        <item name="postSplashScreenTheme">@style/NormalTheme</item>
+    </style>
+
+    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@color/lotus_launch_dark_bg</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>
