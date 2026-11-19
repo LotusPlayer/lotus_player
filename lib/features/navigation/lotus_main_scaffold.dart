@@ -14,6 +14,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../core/providers/lotus_playback_provider.dart';
 import '../../core/services/lotus_notification_channel_manager.dart';
+import '../../core/services/lotus_update_service.dart';
 import '../../core/theme/lotus_theme.dart';
 import '../../core/widgets/lotus_artwork_image.dart';
 import '../../core/widgets/lotus_mood_matrix_backdrop.dart';
@@ -85,6 +86,15 @@ class _LotusMainScaffoldState extends State<LotusMainScaffold> {
           requestPermissionOnBoot: false,
         );
       } catch (_) {}
+
+      // Background launch check for updates
+      if (mounted) {
+        Future.delayed(const Duration(seconds: 2), () {
+          if (mounted) {
+            LotusUpdateService.checkForUpdates(context, isManual: false);
+          }
+        });
+      }
     } catch (e) {
       debugPrint('Lotus system init exception: $e');
     }

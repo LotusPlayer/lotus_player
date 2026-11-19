@@ -1,7 +1,7 @@
 name: lotus_player
 description: "Music Player Developed by Souljalazian"
 publish_to: "none"
-version: 3.2.0+420
+version: 3.2.1+421
 
 environment:
   sdk: ">=3.2.0 <4.0.0"

@@ -19,9 +19,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.core.content.FileProvider
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.io.File
 import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -59,6 +61,7 @@ class MainActivity : FlutterActivity(), ComponentCallbacks2 {
 
     private var intentChannel: MethodChannel? = null
     private var permissionChannel: MethodChannel? = null
+    private var updaterChannel: MethodChannel? = null
     private var dspFallbackChannel: MethodChannel? = null
     private var playbackFallbackChannel: MethodChannel? = null
 
@@ -225,6 +228,43 @@ class MainActivity : FlutterActivity(), ComponentCallbacks2 {
         }
         playbackFallbackChannel = MethodChannel(messenger, "com.souljalazian.lotus_player/playback").apply {
             setMethodCallHandler { _, result -> result.success(true) }
+        }
+
+        updaterChannel = MethodChannel(messenger, "com.souljalazian.lotus_player/updater").apply {
+            setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "installApk" -> {
+                        val filePath = call.argument<String>("filePath")
+                        if (filePath.isNullOrBlank()) {
+                            result.error("INVALID_PATH", "File path cannot be null or empty", null)
+                            return@setMethodCallHandler
+                        }
+                        try {
+                            val file = File(filePath)
+                            if (!file.exists()) {
+                                result.error("FILE_NOT_FOUND", "APK file does not exist at $filePath", null)
+                                return@setMethodCallHandler
+                            }
+                            val uri = FileProvider.getUriForFile(
+                                this@MainActivity,
+                                "com.souljalazian.lotus_player.fileprovider",
+                                file
+                            )
+                            val intent = Intent(Intent.ACTION_VIEW).apply {
+                                setDataAndType(uri, "application/vnd.android.package-archive")
+                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            startActivity(intent)
+                            result.success(true)
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Failed to launch installer intent: ${e.message}", e)
+                            result.error("INSTALL_ERROR", e.message, null)
+                        }
+                    }
+                    else -> result.notImplemented()
+                }
+            }
         }
     }
 

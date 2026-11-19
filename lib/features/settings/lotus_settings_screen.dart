@@ -9,6 +9,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/services/lotus_equalizer_service.dart';
+import '../../core/services/lotus_update_service.dart';
 import '../../core/theme/lotus_theme.dart';
 import '../../core/widgets/lotus_widgets.dart';
 
@@ -190,6 +191,8 @@ class _LotusSettingsScreenState extends State<LotusSettingsScreen> {
                         const SizedBox(height: 12),
                         _buildAboutAndBuildTelemetryCard(accent, containerLow),
                         const SizedBox(height: 14),
+                        _buildCheckForUpdatesButton(accent, containerLow),
+                        const SizedBox(height: 10),
                         _buildResetButton(secondaryAccent, containerLow),
                         const SizedBox(height: 16),
                       ],
@@ -702,6 +705,32 @@ class _LotusSettingsScreenState extends State<LotusSettingsScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCheckForUpdatesButton(Color accent, Color containerLow) {
+    final bool isWhitaniana = _theme.isWhitanianaActive;
+    return OutlinedButton.icon(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: accent,
+        side: BorderSide(
+          color: accent.withValues(alpha: isWhitaniana ? 0.7 : 0.5),
+          width: 1.2,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        backgroundColor: accent.withValues(alpha: 0.06),
+      ),
+      onPressed: () => LotusUpdateService.checkForUpdates(context, isManual: true),
+      icon: const Icon(Icons.system_update_rounded, size: 18),
+      label: const Text(
+        'CHECK FOR UPDATES',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 11.5,
+          letterSpacing: 0.5,
+        ),
       ),
     );
   }
