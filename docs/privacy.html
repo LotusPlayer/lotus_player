@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Lotus Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #07090E; color: #E2E8F0; }
+    </style>
+</head>
+<body class="py-12 px-6 max-w-4xl mx-auto">
+    <div class="mb-8">
+        <a href="index.html" class="text-purple-400 hover:text-purple-300 font-bold text-sm inline-flex items-center gap-2">
+            ← Back to Lotus Player
+        </a>
+    </div>
+
+    <h1 class="text-3xl font-black text-white mb-2">Privacy Policy</h1>
+    <p class="text-sm text-gray-400 mb-8 font-mono">Last updated: November 20, 2026 • Developer: Souljalazian (LotusPlayer)</p>
+
+    <div class="space-y-6 text-sm leading-relaxed text-gray-300">
+        <section class="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-white mb-2">1. Overview</h2>
+            <p>Lotus Player ("we", "our", or "the App") is an offline-focused music player designed to respect user privacy. We believe your personal audio library and listening habits belong entirely to you.</p>
+        </section>
+
+        <section class="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-white mb-2">2. Information We Collect & Device Permissions</h2>
+            <p class="mb-3">Lotus Player operates locally on your device. The app requests the following Android permissions strictly to deliver audio playback:</p>
+            <ul class="list-disc list-inside space-y-1.5 text-gray-400">
+                <li><strong class="text-white">READ_MEDIA_AUDIO / Storage Permissions:</strong> Used solely to index, query, and play your local audio tracks, albums, and playlists. Your audio files are never uploaded to any remote server.</li>
+                <li><strong class="text-white">INTERNET & NETWORK_STATE:</strong> Used to check for app updates via our GitHub release portal, fetch synchronized lyrics upon user request, and connect to Google Firebase for anonymized diagnostics.</li>
+                <li><strong class="text-white">FOREGROUND_SERVICE & MEDIA_PLAYBACK:</strong> Allows continuous audio playback and lock-screen notification controls when the app is in the background.</li>
+                <li><strong class="text-white">POST_NOTIFICATIONS:</strong> Required on Android 13+ to display the active media playback notification.</li>
+            </ul>
+        </section>
+
+        <section class="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-white mb-2">3. Third-Party Services</h2>
+            <p class="mb-2">The App may integrate the following third-party infrastructure:</p>
+            <ul class="list-disc list-inside space-y-1.5 text-gray-400">
+                <li><strong class="text-white">Google Firebase:</strong> Used for core service stability and basic performance diagnostics. Governed by <a href="https://policies.google.com/privacy" class="text-purple-400 underline" target="_blank">Google's Privacy Policy</a>.</li>
+                <li><strong class="text-white">GitHub Pages:</strong> Serves the update metadata (<code class="text-purple-300">version.json</code>) without collecting personal data.</li>
+            </ul>
+        </section>
+
+        <section class="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-white mb-2">4. Data Security & Storage</h2>
+            <p>All playback metrics, playlists, and settings are saved locally on your device's internal storage via SQLite / SharedPreferences. We do not sell, rent, or trade your personal data to any third party.</p>
+        </section>
+
+        <section class="bg-gray-900/60 border border-gray-800 rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-white mb-2">5. Contact Us</h2>
+            <p>If you have any questions or feedback regarding this Privacy Policy, please contact the developer at:</p>
+            <p class="mt-2 font-mono text-purple-400">souljalazian@gmail.com</p>
+        </section>
+    </div>
+
+    <footer class="mt-12 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+        © 2026 Lotus Player • Developed by Souljalazian
+    </footer>
+</body>
+</html>
