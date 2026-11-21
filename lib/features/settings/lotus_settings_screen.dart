@@ -36,6 +36,9 @@ class _LotusSettingsScreenState extends State<LotusSettingsScreen> {
     super.initState();
     _theme.addListener(_onStateDependencyChanged);
     _eqService.addListener(_onStateDependencyChanged);
+    LotusUpdateService.initAppVersion().then((_) {
+      if (mounted) setState(() {});
+    });
   }
 
   @override
@@ -656,7 +659,7 @@ class _LotusSettingsScreenState extends State<LotusSettingsScreen> {
           _buildTelemetryLine(
             'Audio Engine', 'Bit-Perfect 384 kHz',),
           _buildTelemetryLine(
-            'Build Architecture', 'Rise & Bloom v3.2.0',),
+            'Build Architecture', LotusUpdateService.buildArchitecture,),
           const SizedBox(height: 10),
           Center(
             child: Text(

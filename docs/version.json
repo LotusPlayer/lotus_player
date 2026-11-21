@@ -1,7 +1,7 @@
 {
-  "version": "3.2.1",
-  "build_number": 421,
-  "release_date": "2026-11-19",
-  "download_url": "https://github.com/LotusPlayer/lotus_player/releases/latest/download/LotusPlayer_RiseAndBloom_v3.2.1.apk",
-  "changelog": "🪷 Lotus Player Rise & Bloom (v3.2.1)\n• Instant in-app update engine with direct installation\n• Check for Updates button in Settings\n• Refined Whitaniana & Starry Night dynamic themes\n• Optimized DSP Equalizer and offline playback performance"
+  "version": "3.2.2",
+  "build_number": 422,
+  "release_date": "2026-11-21",
+  "download_url": "https://github.com/LotusPlayer/lotus_player/releases/latest/download/LotusPlayer_RiseAndBloom_v3.2.2.apk",
+  "changelog": "🪷 Lotus Player Rise & Bloom (v3.2.2)\n• Dynamic Build Architecture system (automatic version synchronization)\n• Instant settings telemetry updates on newly downloaded builds\n• Core playback optimizations & enhanced in-app updater"
 }

@@ -16,6 +16,7 @@ import 'firebase_options.dart';
 import 'core/providers/lotus_playback_provider.dart';
 import 'core/services/lotus_equalizer_service.dart';
 import 'core/services/lotus_notification_channel_manager.dart';
+import 'core/services/lotus_update_service.dart';
 import 'core/theme/lotus_theme.dart';
 import 'features/splash/lotus_splash_screen.dart';
 import 'features/navigation/lotus_main_scaffold.dart';
@@ -115,6 +116,7 @@ class _LotusPlayerAppState extends State<LotusPlayerApp> {
           }),
 
           // Notification Channels verification
+          LotusUpdateService.initAppVersion().catchError((Object e) { debugPrint('Lotus version notice: '); }),
           LotusNotificationChannelManager.instance
               .initializeNotificationChannels(requestPermissionOnBoot: false)
               .catchError((Object e) {

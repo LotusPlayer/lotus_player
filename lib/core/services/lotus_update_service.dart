@@ -12,8 +12,34 @@ import '../widgets/lotus_widgets.dart';
 /// Service managing remote update detection, in-app streaming APK download,
 /// and native PackageInstaller dispatch for Lotus Player.
 class LotusUpdateService {
-  static const String currentVersion = '3.2.1';
-  static const int currentBuildNumber = 421;
+  static String currentVersion = '3.2.2';
+  static int currentBuildNumber = 422;
+  static bool _hasLoadedAppInfo = false;
+
+  /// Dynamic build architecture label reflecting the exact running version
+  static String get buildArchitecture => 'Rise & Bloom v$currentVersion';
+
+  /// Queries the Android Package Manager dynamically to fetch the real installed APK version
+  static Future<void> initAppVersion() async {
+    if (_hasLoadedAppInfo) return;
+    try {
+      final dynamic result = await _updaterChannel.invokeMethod('getAppInfo');
+      if (result is Map) {
+        final String? v = result['version']?.toString();
+        final int? b = (result['buildNumber'] as num?)?.toInt();
+        if (v != null && v.isNotEmpty) {
+          currentVersion = v;
+        }
+        if (b != null && b > 0) {
+          currentBuildNumber = b;
+        }
+        _hasLoadedAppInfo = true;
+      }
+    } catch (_) {
+      // Fallback to defaults
+    }
+  }
+
   static const String versionEndpoint =
       'https://lotusplayer.github.io/lotus_player/version.json';
 
@@ -32,6 +58,7 @@ class LotusUpdateService {
     _isChecking = true;
 
     try {
+      await initAppVersion();
       final Uri uri = Uri.parse(
         '$versionEndpoint?t=${DateTime.now().millisecondsSinceEpoch}',
       );

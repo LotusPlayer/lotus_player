@@ -262,6 +262,33 @@ class MainActivity : FlutterActivity(), ComponentCallbacks2 {
                             result.error("INSTALL_ERROR", e.message, null)
                         }
                     }
+                    "getAppInfo" -> {
+                        try {
+                            val pInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
+                            } else {
+                                @Suppress("DEPRECATION")
+                                packageManager.getPackageInfo(packageName, 0)
+                            }
+                            val versionName = pInfo.versionName ?: "3.2.2"
+                            val versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                                pInfo.longVersionCode
+                            } else {
+                                @Suppress("DEPRECATION")
+                                pInfo.versionCode.toLong()
+                            }
+                            result.success(mapOf(
+                                "version" to versionName,
+                                "buildNumber" to versionCode
+                            ))
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Failed to query packageInfo: ${e.message}")
+                            result.success(mapOf(
+                                "version" to "3.2.2",
+                                "buildNumber" to 422L
+                            ))
+                        }
+                    }
                     else -> result.notImplemented()
                 }
             }
